@@ -1,0 +1,413 @@
+/* src/Styles/home.css */
+
+.home-container {
+    max-width: 100%;
+    overflow-x: hidden;
+    font-family: 'Arial', sans-serif;
+}
+
+/* --- Estilos para las secciones generales --- */
+.section-wrapper {
+    padding: 3rem 0; /* Espaciado uniforme para todas las secciones */
+}
+
+/* Colores de fondo sutiles para alternar */
+.bg-light-gray {
+    background-color: #f8f8f8;
+}
+
+.bg-white {
+    background-color: #ffffff;
+}
+
+.section-title {
+    font-size: 3.5rem;
+    margin-bottom: 2rem; /* Espaciado reducido para un diseño más compacto */
+    font-family: 'Playfair Display', serif;
+    color: #333;
+}
+
+/* --- Estilos para la sección del Carrusel Principal --- */
+.carousel-section {
+    padding: 0; /* Sin padding en el carrusel principal */
+}
+
+.carousel-item {
+    height: 65vh;
+    position: relative;
+}
+
+.carousel-media {
+    width: 100%; 
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+}
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 2.5rem; /* Padding ligeramente reducido */
+    border-radius: 8px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    max-width: 650px; /* Ancho máximo reducido */
+    box-sizing: border-box; 
+    text-align: center;
+}
+
+.carousel-caption h1 {
+    font-size: 2.5rem; /* Tamaño de fuente reducido para móviles */
+    margin-bottom: 1rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: white;
+}
+
+.carousel-caption p {
+    font-size: 1.1rem;
+    color: white;
+}
+
+/* --- Estilos para la sección de Información (Hecho en Pasto) --- */
+.info-section .section-title {
+    font-size: 2.5rem;
+}
+
+.info-section .info-text {
+    font-size: 1.2rem;
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.info-section .text-colombia {
+    color: #8b4513;
+}
+
+/* --- Estilos para las Secciones de Categorías --- */
+.categories-section .section-title {
+    margin-bottom: 2rem;
+}
+
+.category-card {
+    border: 1px solid #e0e0e0;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.category-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.category-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.category-name {
+    font-size: 1.5rem;
+    margin: 1.5rem 0 1rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.category-button {
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    border-radius: 50px;
+}
+
+.category-button:hover {
+    background-color: #6a320c;
+}
+
+/* --- Sección: Detalles de Calidad --- */
+.quality-section {
+    padding: 60px 0; /* Espaciado reducido */
+    font-family: 'Montserrat', sans-serif;
+}
+
+.quality-section .section-title {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: #333;
+    margin-bottom: 30px; /* Espaciado reducido */
+}
+
+.central-image {
+    max-width: 80%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease-in-out;
+}
+
+.central-image:hover {
+    transform: scale(1.02);
+}
+
+.quality-item {
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    background-color: #ffffff;
+    margin: 15px 0; /* Espaciado reducido */
+    opacity: 0;
+    animation: fadeInSlideUp 0.8s ease-out forwards;
+}
+
+.quality-item h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.quality-item p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #777;
+}
+
+.quality-item:nth-child(1) { animation-delay: 0.2s; }
+.quality-item:nth-child(2) { animation-delay: 0.4s; }
+.quality-item:nth-child(3) { animation-delay: 0.6s; }
+.quality-item:nth-child(4) { animation-delay: 0.8s; }
+
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 767.98px) {
+    .quality-section .row {
+        flex-direction: column;
+    }
+    .central-image {
+        margin: 30px 0;
+        max-width: 100%;
+    }
+}
+
+/* --- Estilos para la sección de Productos Destacados --- */
+.featured-products {
+    padding: 60px 0;
+}
+
+/* Estilos específicos para las flechas del carrusel de productos */
+.featured-products .carousel-control-prev,
+.featured-products .carousel-control-next {
+    top: 27%;
+    width: 40px;
+    height: 40px;
+    background-color: #8b4513;
+    border-radius: 50%;
+    opacity: 0.8;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.featured-products .carousel-control-prev:hover,
+.featured-products .carousel-control-next:hover {
+    opacity: 1;
+}
+
+.featured-products .carousel-control-prev-icon,
+.featured-products .carousel-control-next-icon {
+    width: 20px;
+    height: 20px;
+    filter: invert(1);
+}
+
+/* Estilo para los ítems del carrusel, asegurando que se muestren correctamente */
+.featured-products .carousel-item {
+    padding: 20px 0;
+}
+
+.product-card {
+    border: 1px solid #e0e0e0;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.product-name {
+    font-size: 1.2rem;
+    margin: 1rem 0 0.5rem;
+}
+
+.product-price {
+    font-weight: bold;
+    color: #8b4513;
+}
+
+.buy-button {
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    border-radius: 50px;
+}
+
+.buy-button:hover {
+    background-color: #6a320c;
+}
+
+/* --- Estilos para la sección de Historia de la Marca --- */
+.brand-story {
+    padding: 4rem 2rem;
+}
+
+.story-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.brand-story .lead {
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.brand-story p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+/* src/Styles/home.css */
+.brand-story p {
+    text-align: justify;
+}
+
+/* --- Estilos para la nueva sección de Gift Card --- */
+.gift-card-section {
+    position: relative;
+    height: 60vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.gift-card-media {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.gift-card-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+}
+
+.gift-card-box {
+    border: 2px solid white;
+    padding: 2rem 3rem;
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.gift-card-title {
+    font-size: 3rem;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 5px;
+    margin-bottom: 0.5rem;
+    color: white; /* Color del texto cambiado a blanco para que resalte sobre el video */
+}
+
+.gift-card-subtitle {
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 4px;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    color: white; /* Color del texto cambiado a blanco */
+}
+
+.gift-card-button {
+    color: white; /* Color del texto cambiado a blanco */
+    text-decoration: none;
+    border: 1px solid white;
+    padding: 0.7rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    display: inline-block;
+    border-radius: 50px;
+}
+
+.gift-card-button .arrow {
+    margin-left: 10px;
+}
+
+.gift-card-button:hover {
+    background-color: white;
+    color: black;
+}
+
+/* --- Media Queries para Responsividad --- */
+@media (max-width: 767px) {
+    .carousel-item {
+        height: 50vh;
+    }
+
+    .carousel-caption {
+        width: 90%;
+        top: 25%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .brand-story .row {
+        flex-direction: column-reverse;
+    }
+
+    .story-content {
+        margin-top: 2rem;
+    }
+}

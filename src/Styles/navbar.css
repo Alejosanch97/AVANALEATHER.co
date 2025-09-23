@@ -1,0 +1,115 @@
+/* src/components/navbar.css */
+
+/* Estilos generales del navbar */
+.avana-navbar {
+    background-color: #f8f6f5 !important;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+}
+
+/* Contenedor del logo y el texto */
+.avana-navbar .navbar-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+/* Estilos del logo */
+.avana-navbar .navbar-brand .logo {
+    height: 150px;
+}
+
+/* Estilos del texto "Avana Leather" */
+.avana-navbar .navbar-brand .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #b8860b;
+    letter-spacing: 1px;
+}
+
+/* Estilos para los enlaces de navegación */
+.navbar-nav {
+    display: flex;
+    gap: 20px;
+}
+
+.avana-navbar .nav-link {
+    color: #333 !important;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: color 0.3s ease-in-out;
+}
+
+.avana-navbar .nav-link:hover {
+    color: #8b4513 !important;
+}
+
+/* Estilos de los iconos del carrito y WhatsApp */
+.nav-icon-btn {
+    color: #555;
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+    margin-left: 15px;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-icon-btn:hover {
+    color: #8b4513;
+}
+
+/* Media Queries para Responsividad en Móviles */
+@media (max-width: 991.98px) {
+    .avana-navbar {
+        padding: 1rem;
+    }
+
+    .navbar-collapse {
+        background-color: #f8f6f5;
+        padding: 1rem;
+        text-align: center;
+        margin-top: 1rem;
+        position: absolute;
+        top: 100%; /* Posiciona el menú debajo del navbar */
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    
+    .navbar-nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .nav-link {
+        font-size: 1.2rem;
+    }
+
+    /* Oculta los iconos de escritorio */
+    .d-none.d-lg-flex {
+        display: none !important;
+    }
+    
+    .d-lg-none {
+        display: flex !important;
+        justify-content: center;
+    }
+
+    .avana-navbar .navbar-brand {
+        margin: auto;
+    }
+
+    .avana-navbar .navbar-brand .logo {
+        height: 100px;
+    }
+
+    .avana-navbar .navbar-brand .logo-text {
+        font-size: 1.5rem;
+    }
+}

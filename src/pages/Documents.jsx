@@ -3,7 +3,6 @@ import { useParams, Link } from 'react-router-dom';
 import '../Styles/documents.css'; // Asegúrate de importar el archivo CSS
 
 // Se utiliza un objeto para almacenar el contenido de cada documento legal
-// Este objeto puede ser movido a un archivo separado, por ejemplo, src/data/documentsData.js
 const documents = {
     'terminos-y-condiciones': {
         title: 'Términos y Condiciones',
@@ -17,10 +16,9 @@ const documents = {
         <h3>2. PROCESO DE COMPRA</h3>
         <p>2.1. Cada Producto ofrecido para la venta en el Sitio Web puede verse siguiendo un enlace dedicado que muestra las imágenes, el precio unitario y los colores. Luego de ello, el producto se puede adicionar a su "Carrito de compras".</p>
         <p>2.2. Los Productos seleccionados por el cliente pasarán a una sección especial denominada "Carrito de la Compra".</p>
-        <p>2.3. Contamos con dos opciones para realizar la compra: compra rápida o registrarse y crear una cuenta.
+        <p>2.3. Contamos con una unica opcion para realizar la compra: compra rápida
         <ol>
             <li>La "Compra rápida" solicita datos personales, método de envío y método de pago.</li>
-            <li>Registrarse y crear una cuenta permite guardar su información para futuras compras y acceder a funciones especiales como "Seguimiento de mi pedido".</li>
         </ol>
         <p>2.4. Antes de confirmar el pedido, el cliente debe comprobar la exactitud del contenido del carrito y rellenar el formulario de pedido.</p>
         <p>2.5. El proceso de compra se completa tan pronto como el cliente pulsa el botón de confirmación final, validando así su pedido, que se remitirá directamente a Avana Leather. Después de este paso, el cliente no podrá modificar el contenido del pedido.</p>
@@ -30,7 +28,7 @@ const documents = {
         
         <h3>3. POLÍTICA DE PRIVACIDAD</h3>
         <p>Avana Leather se compromete a proteger la información que es proporcionada por los usuarios. Al solicitarle información personal, aseguramos que solo se empleará de acuerdo con los términos de este documento.</p>
-        <p>3.1 Información que es recogida</p>
+        <p>3.1 Información</p>
         <p>Podemos recoger información personal como: Nombre, información de contacto (dirección de correo, teléfono) e información demográfica. También se puede requerir información específica para procesar pedidos, entregas o facturación. Esta información no será compartida con terceros.</p>
         <p>3.2 Uso de la información recogida</p>
         <p>La información se emplea para proporcionar el mejor servicio posible, mantener un registro de usuarios y pedidos, y mejorar nuestros productos. Es posible que enviemos correos electrónicos con ofertas especiales y nuevos productos, que podrán ser cancelados en cualquier momento por el usuario.</p>
@@ -87,7 +85,7 @@ const documents = {
         <h3>1. Condiciones para la devolución</h3>
         <p>Tiene un plazo de **5 días hábiles** a partir de la fecha de entrega para solicitar una devolución. El producto debe estar en su estado original, sin usar, con todas las etiquetas y embalajes intactos.</p>
         <h3>2. Proceso de solicitud</h3>
-        <p>Para iniciar un proceso de reembolso, por favor, envíe su solicitud a nuestro equipo de servicio al cliente a través de nuestro correo electrónico. La solicitud debe incluir su número de pedido y el motivo de la devolución.</p>
+        <p>Para iniciar un proceso de reembolso, por favor, envíe su solicitud a nuestro equipo de servicio al cliente a través de nuestro correo electrónico (avanaleather@gmail.com). La solicitud debe incluir su número de pedido y el motivo de la devolución.</p>
         <h3>3. Reembolso</h3>
         <p>Una vez que recibamos y revisemos el artículo devuelto, le enviaremos un correo electrónico para notificarle que hemos recibido su artículo. También le notificaremos sobre la aprobación o rechazo de su reembolso. Si es aprobado, su reembolso será procesado y se aplicará un crédito automáticamente a su método de pago original en un plazo máximo de **30 días hábiles**.</p>
         <h3>4. Costos de envío</h3>
@@ -107,7 +105,7 @@ const documents = {
         </ul>
         <p>Tenga en cuenta que los tiempos de entrega pueden variar debido a condiciones climáticas, eventos de fuerza mayor o bloqueos en las vías.</p>
         <h3>2. Costos de envío</h3>
-        <p>El envío es **GRATIS** para compras superiores a **$150.000**. Para pedidos de menor valor, el costo de envío será calculado al momento de la compra, en función de su ubicación.</p>
+        <p>El envío es **GRATIS** para compras superiores a **$300.000**. Para pedidos de menor valor, el costo de envío será calculado al momento de la compra, en función de su ubicación.</p>
         <h3>3. Seguimiento de su pedido</h3>
         <p>Una vez que su pedido sea enviado, recibirá un correo electrónico de confirmación con un número de seguimiento para que pueda rastrear el estado de su entrega en línea.</p>
         <h3>4. En caso de no recibir el pedido</h3>
@@ -119,6 +117,7 @@ const documents = {
         type: 'warranty', // Tipo para un diseño de tabla específico
         content: `
         <h2>POLÍTICAS DE GARANTÍA</h2>
+        <p>Gracias por elegir un producto Avana Leather. Cada bolso ha sido elaborado con dedicación y maestría, cuidando cada detalle para brindarte calidad, estilo y durabilidad.</p>
         <p>Recuerda que para realizar cualquier solicitud de cambio y garantía deberás tener en cuenta el siguiente horario y días hábiles:</p>
         <p>De Lunes a Viernes (Días Hábiles) de 10:00 AM a 5:00 PM. Estos horarios y días aplican para realizar cambio en tienda física o presencial.</p>
         <p>Avana Leather cuenta con diferentes tiempos de garantías, dependiendo del tipo de producto:</p>
@@ -135,12 +134,8 @@ const documents = {
                     <td>60 días</td>
                 </tr>
                 <tr>
-                    <td>Accesorios y gafas</td>
+                    <td>Accesorios</td>
                     <td>3 días</td>
-                </tr>
-                <tr>
-                    <td>Relojes</td>
-                    <td>180 días por maquinaria y 8 días por funcionalidad de partes externas</td>
                 </tr>
                 <tr>
                     <td>Productos en promoción</td>
@@ -148,46 +143,41 @@ const documents = {
                 </tr>
                 <tr>
                     <td>Ventas al por mayor</td>
-                    <td>3 días</td>
-                </tr>
-                <tr>
-                    <td>Artículos otros</td>
-                    <td>Sin garantía (deben ser probados en tienda en presencia del cliente)</td>
+                    <td>10 días</td>
                 </tr>
             </tbody>
         </table>
         <p>* No se realiza devoluciones de dinero por ningún concepto.</p>
         <p>* Tiempos internos de garantía: la empresa contará con un plazo de 30 días calendario después de recibir el producto para dar una solución a la solicitud.</p>
         
-        <h3>1. CONDICIONES DE GARANTÍA</h3>
+        <h3>GARANTÍA DE CALIDAD</h3>
+        <p>Tu bolso cuenta con una garantía de **3 meses** a partir de la fecha de compra, que cubre defectos de fabricación en costuras, herrajes y materiales.</p>
+
+        <p>Esta garantía NO CUBRE:</p>
+        <ul>
+            <li>Daños por mal uso, humedad, golpes, manchas o exposición prolongada al sol.</li>
+            <li>Rasgaduras por sobrepeso o contacto con sustancias abrasivas.</li>
+            <li>Desgaste natural del cuero por el paso del tiempo.</li>
+        </ul>
+        
+        <h3>CONDICIONES DE GARANTÍA</h3>
         <ul>
             <li>Factura de compra o cédula del comprador.</li>
             <li>Vigencia de la garantía. La garantía comienza a regir desde el momento de compra, determinado por la fecha de la factura.</li>
         </ul>
         
-        <h3>2. BOLSOS Y COMPLEMENTOS DE CARTERA</h3>
+        <h3>BOLSOS Y COMPLEMENTOS DE CARTERA</h3>
         <p>Los bolsos no deben presentar cambios o modificaciones de su estado natural para hacer efectiva la garantía. No son motivos de Garantía:</p>
         <ul>
             <li>Rasgones, raspones, ruptura de materiales.</li>
             <li>Los cambios en el color, tonalidad y texturas que sean naturales del material.</li>
         </ul>
         
-        <h3>3. ACCESORIOS Y GAFAS</h3>
-        <p>Estos productos son para un uso especial, se debe evitar el contacto con el agua, perfumes, jabones y otro producto químico. Avana Leather no se hace responsable del deterioro normal ni por los daños por descuido o mal uso.</p>
-        
-        <h3>4. RELOJES</h3>
-        <p>La garantía en relojes no incluye la duración de la pila, desgaste normal, cristal rayado o quebrado, o alteración de color de correas. Tampoco cubre defectos por contacto con productos corrosivos o reparación inadecuada por terceros.</p>
-        <p>El reloj debe ser entregado en su empaque original. No se aceptan solicitudes de garantías por problemas de mal uso del producto.</p>
-        
         <h3>Para realizar una solicitud de garantía se podrán utilizar los siguientes medios:</h3>
         <ul>
-            <li>Acercarse a cualquier punto físico a nivel nacional.</li>
             <li>Contactarse con la línea de Servicio al cliente de Avana Leather al 322 510 9005 (en horario de lunes a viernes de 8:00 am a 5:30 pm).</li>
             <li>A través de nuestro correo avanaleather@gmail.com.</li>
         </ul>
-        
-        <h2>POLÍTICAS DE CAMBIO</h2>
-        <p>Si desea hacer el cambio de alguno de nuestros productos, puede acercarse a cualquiera de nuestras tiendas dentro de los 8 días siguientes a la compra y presentar la factura de compra o cédula. El cambio es válido con respecto al precio pagado, y el producto debe valer igual o más. En ningún caso se acepta que el producto tenga un menor valor.</p>
         `,
     },
     'informacion-de-contacto': {
@@ -220,7 +210,76 @@ const documents = {
             }
         ]
     },
-    // Puedes agregar más documentos aquí
+    'cuidados-productos': {
+        title: 'Cuidados para tus productos',
+        type: 'care',
+        content: {
+            intro: 'Para conservar su apariencia y suavidad, es importante tratar tu bolso con esmero, empleando los productos y cuidados adecuados.',
+            list: [
+                'Limpia tu producto regularmente con un paño seco y suave.',
+                'Hidrata el cuero cada 3 meses con un acondicionador especializado.',
+                'Evita el contacto prolongado con el sol, la humedad o el calor intenso.',
+                'Guarda tu producto en una bolsa antipolvo, en un lugar fresco y seco cuando no lo utilices.',
+                'Protege tu artículo de objetos punzantes o abrasivos.',
+            ],
+            cta: '¿Necesitas ayuda con tu cuidado?',
+            contactEmail: 'avanaleather@gmail.com'
+        }
+    },
+    'preguntas-frecuentes': {
+        title: 'Preguntas Frecuentes',
+        type: 'faq',
+        content: [
+            {
+                question: '¿Cómo puedo rastrear mi pedido?',
+                answer: 'Una vez que tu pedido sea enviado, recibirás un correo electrónico de confirmación con un número de seguimiento. Puedes usar este número en el sitio web de la transportadora para conocer el estado de tu entrega.'
+            },
+            {
+                question: '¿Qué métodos de pago aceptan?',
+                answer: 'Aceptamos pagos con tarjetas de crédito, débito y otras pasarelas de pago seguras para garantizar una compra fácil y protegida.'
+            },
+            {
+                question: '¿Cuál es el tiempo de garantía de los productos?',
+                answer: 'La garantía de los bolsos y complementos de cartera es de 60 días, mientras que para los relojes es de 180 días por maquinaria. Te invitamos a revisar nuestra sección de "Garantía y devoluciones" para más detalles sobre cada categoría de producto.'
+            },
+            {
+                question: '¿Puedo devolver un producto?',
+                answer: 'Sí, tienes un plazo de 5 días hábiles a partir de la fecha de entrega para solicitar una devolución, siempre y cuando el producto esté en su estado original, sin usar, con todas las etiquetas y embalajes intactos.'
+            },
+            {
+                question: '¿Cómo puedo contactar con el servicio al cliente?',
+                answer: 'Puedes contactarnos a través de nuestra línea de WhatsApp, correo electrónico o por medio de nuestra cuenta de Instagram. Visita nuestra sección de "Información de contacto" para conocer todos nuestros canales de atención.'
+            }
+        ]
+    },
+    'nosotros': {
+        title: 'Nosotros',
+        type: 'about',
+        content: `
+        <div class="about-container">
+            <div class="about-header">
+                <h2>Nuestra Historia</h2>
+                <h3>El Arte del Cuero, Un Legado Familiar</h3>
+            </div>
+            <div class="about-content">
+                <p>Avana Leather nace del sueño de honrar la tradición y convertirla en estilo. Somos una marca colombiana con raíces en <strong>Belén, Nariño</strong>, tierra reconocida por su cultura artesanal y su amor por el trabajo manual. Hace dos años decidimos transformar este legado en una empresa que combina tradición, diseño y modernidad.</p>
+                
+                <p>Nuestra historia comienza mucho antes de la creación de la marca. El arte del cuero ha estado presente en nuestra familia por generaciones: un conocimiento transmitido de padres a hijos, donde la dedicación, la paciencia y el respeto por el oficio han sido siempre la base. Nuestro fundador creció viendo a su padre trabajar el cuero con maestría, aprendiendo que cada corte y cada puntada cuentan una historia.</p>
+                
+                <p>En <strong>Belén</strong>, la tradición del cuero es parte de la identidad cultural. El trabajo marroquinero no solo genera sustento, sino que también representa un arte que ha vestido y acompañado a los colombianos a lo largo del tiempo. Por eso, en Avana Leather no solo fabricamos bolsos: damos vida a piezas que conectan con nuestras raíces y celebran la riqueza de nuestra tierra.</p>
+                
+                <p>Seleccionamos únicamente los <strong>mejores materiales</strong>, cuidando cada detalle en el proceso de diseño y producción. Cada bolso es hecho a mano, asegurándonos de que sea único, resistente y con un acabado impecable. Para nosotros, un bolso no es un accesorio pasajero: es un compañero de vida que refleja autenticidad y estilo.</p>
+                
+                <p>Avana es más que moda: es un legado familiar que se renueva en cada creación. Creemos en producir de manera consciente, en pequeña escala, para garantizar exclusividad y reducir nuestro impacto en el medio ambiente. Así, cada pieza no solo lleva nuestra historia, sino también un compromiso con el futuro.</p>
+                
+                <p>Hoy, más de 100 mujeres llevan en sus manos un pedacito de nuestra esencia. Con cada bolso, seguimos escribiendo una historia que comenzó en Belén y que ahora queremos compartir contigo: la experiencia Avana.</p>
+            </div>
+            <div class="about-image-container">
+                <img src="https://i.pinimg.com/736x/9f/00/6f/9f006f982c4cad9c362162dc49a4957b.jpg" alt="Taller de Avana Leather" class="about-image"/>
+            </div>
+        </div>
+        `
+    }
 };
 
 // Componente para mostrar documentos legales
@@ -284,6 +343,41 @@ const ContactInfo = ({ content }) => (
     </div>
 );
 
+// Componente para la sección de Cuidados para productos
+const CareInfo = ({ content }) => (
+    <div className="document-container care-info-container">
+        <h2>TARJETA DE CUIDADOS</h2>
+        <p className="care-intro">{content.intro}</p>
+        <ul className="care-list">
+            {content.list.map((item, index) => (
+                <li key={index}>{item}</li>
+            ))}
+        </ul>
+        <div className="care-contact">
+            <p className="care-cta">{content.cta}</p>
+            <div className="contact-card-care">
+                <i className="fas fa-envelope"></i>
+                <a href={`mailto:${content.contactEmail}`}>{content.contactEmail}</a>
+            </div>
+        </div>
+    </div>
+);
+
+// Componente para la sección de Preguntas Frecuentes
+const FaqInfo = ({ content }) => (
+    <div className="document-container faq-info-container">
+        <h2>Preguntas Frecuentes</h2>
+        <div className="faq-list">
+            {content.map((item, index) => (
+                <div className="faq-item" key={index}>
+                    <h4 className="faq-question">{item.question}</h4>
+                    <p className="faq-answer">{item.answer}</p>
+                </div>
+            ))}
+        </div>
+    </div>
+);
+
 // Componente principal que gestiona el estado y muestra el contenido correcto
 export const Documents = () => {
     const { docName } = useParams();
@@ -311,6 +405,10 @@ export const Documents = () => {
                 <div className="container">
                     {documentData?.type === 'contact' ? (
                         <ContactInfo content={documentData.content} />
+                    ) : documentData?.type === 'care' ? (
+                        <CareInfo content={documentData.content} />
+                    ) : documentData?.type === 'faq' ? (
+                        <FaqInfo content={documentData.content} />
                     ) : (
                         <LegalDocument docName={docName} />
                     )}

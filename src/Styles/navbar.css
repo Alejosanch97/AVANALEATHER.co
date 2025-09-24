@@ -113,3 +113,130 @@
         font-size: 1.5rem;
     }
 }
+
+/* --- Estilos para el Modal de Contacto (Mejorado) --- */
+
+/* Estilos generales del contenedor del modal */
+.modal-content {
+    background-color: #f8f6f5; /* Fondo más suave y elegante */
+    border: 1px solid #d7794a;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    padding: 2rem 1rem;
+}
+
+/* Encabezado y título del modal */
+.modal-header {
+    border-bottom: none; /* Elimina la línea de separación */
+    padding: 0 1rem 1.5rem;
+}
+
+.contact-modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem; /* Tamaño más grande para el título */
+    font-weight: 700;
+    color: #b8860b; /* Color dorado del logo de Avana */
+    text-align: center;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+/* Botón de cierre */
+.modal-header .btn-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: #333;
+    opacity: 0.7;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.modal-header .btn-close:hover {
+    opacity: 1;
+}
+
+/* Cuerpo del formulario */
+.modal-body {
+    padding: 0 1rem 2rem;
+}
+
+/* Estilo para los campos de entrada y el área de texto */
+.modal-body .form-control {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0; /* Borde más sutil */
+    border-radius: 8px; /* Bordes más redondeados */
+    padding: 12px 18px; /* Aumenta el padding para más espacio */
+    font-size: 1rem;
+    color: #333;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.modal-body .form-control:focus {
+    border-color: #b8860b; /* Resalta con el color dorado al enfocar */
+    box-shadow: 0 0 0 0.2rem rgba(184, 134, 11, 0.2);
+    outline: none;
+}
+
+/* Placeholder (texto dentro del campo) */
+.modal-body .form-control::placeholder {
+    color: #888;
+    font-style: italic;
+}
+
+/* Estilo del botón de enviar */
+.modal-body .btn-dark {
+    background-color: #333;
+    border-color: #333;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 1.1rem; /* Tamaño de fuente más grande */
+    padding: 12px 20px;
+    letter-spacing: 1px;
+    border-radius: 8px; /* Bordes redondeados */
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+.modal-body .btn-dark:hover {
+    background-color: #000;
+    border-color: #000;
+}
+
+/* Estilo para el contenedor del botón (d-grid) */
+.modal-body .d-grid {
+    margin-top: 1.5rem;
+}
+
+
+/* --- Mensaje de éxito personalizado --- */
+
+.success-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50; /* Color verde */
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.success-message.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.success-message i {
+    font-size: 1.5rem;
+}

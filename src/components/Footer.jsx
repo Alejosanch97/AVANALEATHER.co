@@ -35,9 +35,9 @@ export const Footer = () => (
                 <div className="col-lg-3 col-md-6 mb-4">
                     <h5 className="footer-title">Ayuda</h5>
                     <ul className="footer-links list-unstyled">
-                        <li><a href="#">Preguntas frecuentes</a></li>
+                        <li><Link to="/docs/preguntas-frecuentes">Preguntas frecuentes</Link></li>
                         <li><Link to="/docs/garantia-y-devoluciones">Garantía</Link></li>
-                        <li><a href="#">Cuidados para tus productos</a></li>
+                        <li><Link to="/docs/cuidados-productos">Cuidados para tus productos</Link></li>
                     </ul>
                 </div>
 
@@ -48,16 +48,6 @@ export const Footer = () => (
                         <li><a href="tel:+573225109005">Llámanos: +57 322 510 9005</a></li>
                         <li><a href="mailto:avanaleather@gmail.com">Correo: avanaleather@gmail.com</a></li>
                     </ul>
-                    <div className="newsletter-form mt-4">
-                        <h6 className="newsletter-title">Suscríbete a nuestro boletín</h6>
-                        <form>
-                            <div className="input-group">
-                                <input type="email" className="form-control" placeholder="Tu correo electrónico" />
-                                <button className="btn btn-outline-secondary" type="submit">Suscribir</button>
-                            </div>
-                            <small className="form-text text-muted mt-2">Al suscribirte, aceptas nuestra política de privacidad.</small>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>

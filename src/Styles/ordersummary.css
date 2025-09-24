@@ -1,0 +1,135 @@
+/* * Estilos para la página de resumen del pedido.
+ * Utiliza variables de CSS para fácil personalización de colores.
+ */
+
+:root {
+  --primary-color: #343a40; /* Gris oscuro para títulos y botones */
+  --secondary-color: #f8f9fa; /* Gris claro para fondos */
+  --accent-color: #8b4513; /* Marrón para detalles, como el borde del color-dot */
+  --text-color: #212529; /* Color de texto principal */
+  --muted-text-color: #6c757d; /* Color de texto secundario */
+}
+
+body {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+
+.order-summary-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Sección de encabezado */
+.text-center.mb-4 {
+  margin-bottom: 2rem !important;
+}
+
+.summary-logo {
+  max-width: 250px; /* Tamaño más grande para el logo */
+  height: auto;
+  margin-bottom: 0.5rem !important; /* Reduce el espacio debajo del logo */
+}
+
+h2.display-6 {
+  font-weight: bold;
+  color: var(--primary-color);
+  letter-spacing: -1px; /* Espaciado más ajustado para un look moderno */
+}
+
+.lead {
+  font-size: 1rem;
+  color: var(--muted-text-color);
+}
+
+/* Contenedores de tarjetas */
+.card {
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Sombra más pronunciada y elegante */
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Efecto de elevación al pasar el mouse */
+}
+
+.card-title {
+  color: var(--primary-color);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* Estilos de los elementos del resumen de compra */
+.img-thumbnail {
+  border-radius: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.img-thumbnail:hover {
+  transform: scale(1.05); /* Zoom en la imagen al pasar el mouse */
+}
+
+.fw-bold {
+  font-weight: 700 !important;
+}
+
+.border-bottom {
+  border-color: #dee2e6 !important;
+}
+
+.border-top {
+  border-color: #dee2e6 !important;
+}
+
+/* Estilos del formulario de datos de envío */
+.form-label {
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+.form-control {
+  border-radius: 0.5rem;
+  border: 1px solid #ced4da;
+  padding: 0.75rem 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(52, 58, 64, 0.25);
+}
+
+/* Estilos del botón de confirmación */
+.btn-dark {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-dark:hover {
+  background-color: #495057;
+  border-color: #495057;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn-dark:disabled {
+  background-color: #e9ecef;
+  border-color: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Estilos para el texto de pago contra entrega */
+.form-check-label {
+  color: var(--primary-color);
+  font-weight: 500;
+}

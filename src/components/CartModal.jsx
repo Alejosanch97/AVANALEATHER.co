@@ -1,11 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import '../Styles/cart.css';
 
 export const CartModal = ({ show, handleClose }) => {
     const { store, dispatch } = useGlobalReducer();
-    const { cart, allProducts } = store; // Access allProducts directly from the store
+    const { cart, allProducts } = store;
+    const navigate = useNavigate();
 
-    // Función para eliminar un producto del carrito
     const handleRemoveFromCart = (itemId) => {
         dispatch({
             type: "REMOVE_FROM_CART",
@@ -13,18 +15,13 @@ export const CartModal = ({ show, handleClose }) => {
         });
     };
 
-    // Función para cambiar el color y la imagen de un producto en el carrito
     const handleChangeColor = (item, newColor) => {
-        // Find the full product data from the global store using its ID
         const product = allProducts.find(p => p.id === item.id);
         
         if (product) {
-            // Format the new color to match the keys in the images object
             const formattedColor = newColor.toLowerCase().replace(/\s/g, '');
-            // Get the new image URL from the product's image object
             const newImage = product.images[formattedColor];
 
-            // Envía la acción al reducer para actualizar el estado global del carrito
             if (newImage) {
                 dispatch({
                     type: "UPDATE_CART_ITEM_COLOR",
@@ -38,13 +35,8 @@ export const CartModal = ({ show, handleClose }) => {
         }
     };
 
-    // Calcular el subtotal de todos los productos
     const subtotal = cart.reduce((acc, item) => acc + item.price, 0);
-
-    // Calcular el descuento si el subtotal es mayor a 150,000
     const discount = subtotal > 150000 ? subtotal * 0.10 : 0;
-
-    // Calcular el total final
     const total = subtotal - discount;
 
     const formatPrice = (price) => {
@@ -55,8 +47,23 @@ export const CartModal = ({ show, handleClose }) => {
         });
     };
 
+    const handleConfirmOrder = () => {
+        handleClose();
+        navigate('/order-summary');
+    };
+
     return (
-        <div className={`modal fade ${show ? 'show d-block' : ''}`} tabIndex="-1" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+        <div 
+            className={`modal fade ${show ? 'show d-block' : ''}`} 
+            tabIndex="-1" 
+            style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+            onClick={(e) => {
+                // Cierra el modal solo si se hace clic en el fondo
+                if (e.target.classList.contains('modal')) {
+                    handleClose();
+                }
+            }}
+        >
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
@@ -117,7 +124,12 @@ export const CartModal = ({ show, handleClose }) => {
                         )}
                     </div>
                     <div className="modal-footer justify-content-center">
-                        <button type="button" className="btn btn-lg btn-confirm-order" disabled={cart.length === 0}>
+                        <button 
+                            type="button" 
+                            className="btn btn-lg btn-confirm-order" 
+                            disabled={cart.length === 0}
+                            onClick={handleConfirmOrder}
+                        >
                             Confirmar Pedido
                         </button>
                     </div>

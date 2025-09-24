@@ -1,23 +1,28 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../Styles/home.css';
 
 export const Home = () => {
 
-    const {store, dispatch} = useGlobalReducer()
+    const { store, dispatch } = useGlobalReducer();
+    const navigate = useNavigate();
 
     // Datos de los Productos Destacados
     const products = [
-        { id: 1, name: 'Bolso Avana', price: '180.000', category: 'Bolsos', image: 'https://i.pinimg.com/736x/97/cd/c4/97cdc45be52a44ef611eb487fbfa0c10.jpg' },
-        { id: 2, name: 'Bolso Jade', price: '190.000', category: 'Bolsos', image: 'https://i.pinimg.com/736x/c0/45/a4/c045a4e9f12b4cf6d081454919a5040f.jpg' },
-        { id: 3, name: 'Bolso Navy', price: '200.000', category: 'Bolsos', image: 'https://i.pinimg.com/736x/8b/8e/66/8b8e662a04d1ba2d4e8ff150e0a4c779.jpg' },
-        { id: 4, name: 'Mochila Marine', price: '250.000', category: 'Mochilas', image: 'https://i.pinimg.com/736x/65/16/c8/6516c8a997c5df463d66eafba6991bfc.jpg' },
-        { id: 5, name: 'Mochila Nautic', price: '250.000', category: 'Mochilas', image: 'https://i.pinimg.com/736x/09/48/b3/0948b3bb07eadc43f49c812288e896cf.jpg' },
-        { id: 6, name: 'Cinturón Nut', price: '50.000', category: 'Accesorios', image: 'https://i.pinimg.com/736x/03/17/f2/0317f236a8c3ad7610c61ff9f961f3f5.jpg' },
-        { id: 7, name: 'Monedero Coral', price: '45.000', category: 'Accesorios', image: 'https://i.pinimg.com/736x/97/52/4e/97524e83e4b01867f25f01caff2199a0.jpg' },
-        { id: 8, name: 'Tarjetero Caoba', price: '45.000', category: 'Accesorios', image: 'https://i.pinimg.com/736x/ea/65/e1/ea65e17654968ab07bf5ecc9495f42a2.jpg' },
-        { id: 9, name: 'Llavero', price: '15.000', category: 'Complementos', image: 'https://i.pinimg.com/1200x/16/d0/63/16d063d4e547f385968ce82f1822fdd6.jpg' },
-        { id: 10, name: 'Portapasaportes', price: '25.000', category: 'Complementos', image: 'https://i.pinimg.com/736x/05/8a/dc/058adce4e4a362273ce144df277d0ad6.jpg' },
+        // Importante: Los precios ahora son números para poder hacer cálculos
+        { id: 1, name: 'Bolso Avana', price: 180000, category: 'Bolsos', image: 'https://i.pinimg.com/736x/97/cd/c4/97cdc45be52a44ef611eb487fbfa0c10.jpg' },
+        { id: 2, name: 'Bolso Jade', price: 190000, category: 'Bolsos', image: 'https://i.pinimg.com/736x/c0/45/a4/c045a4e9f12b4cf6d081454919a5040f.jpg' },
+        { id: 3, name: 'Bolso Navy', price: 200000, category: 'Bolsos', image: 'https://i.pinimg.com/736x/8b/8e/66/8b8e662a04d1ba2d4e8ff150e0a4c779.jpg' },
+        { id: 4, name: 'Mochila Marine', price: 250000, category: 'Mochilas', image: 'https://i.pinimg.com/736x/65/16/c8/6516c8a997c5df463d66eafba6991bfc.jpg' },
+        { id: 5, name: 'Mochila Nautic', price: 250000, category: 'Mochilas', image: 'https://i.pinimg.com/736x/09/48/b3/0948b3bb07eadc43f49c812288e896cf.jpg' },
+        { id: 6, name: 'Cinturón Nut', price: 50000, category: 'Accesorios', image: 'https://i.pinimg.com/736x/03/17/f2/0317f236a8c3ad7610c61ff9f961f3f5.jpg' },
+        { id: 7, name: 'Monedero Coral', price: 45000, category: 'Accesorios', image: 'https://i.pinimg.com/736x/97/52/4e/97524e83e4b01867f25f01caff2199a0.jpg' },
+        { id: 8, name: 'Tarjetero Caoba', price: 45000, category: 'Accesorios', image: 'https://i.pinimg.com/736x/ea/65/e1/ea65e17654968ab07bf5ecc9495f42a2.jpg' },
+        { id: 9, name: 'Llavero', price: 15000, category: 'Complementos', image: 'https://i.pinimg.com/1200x/16/d0/63/16d063d4e547f385968ce82f1822fdd6.jpg' },
+        { id: 10, name: 'Portapasaportes', price: 25000, category: 'Complementos', image: 'https://i.pinimg.com/736x/05/8a/dc/058adce4e4a362273ce144df277d0ad6.jpg' },
     ];
 
     const categories = [
@@ -26,9 +31,31 @@ export const Home = () => {
         { id: 3, name: 'Accesorios', image: 'https://i.pinimg.com/736x/03/17/f2/0317f236a8c3ad7610c61ff9f961f3f5.jpg' },
         { id: 4, name: 'Complementos', image: 'https://i.pinimg.com/1200x/16/d0/63/16d063d4e547f385968ce82f1822fdd6.jpg' },
     ];
+    
+    
+    // Función para añadir productos al carrito
+    const handleAddToCart = (product) => {
+        dispatch({ type: "ADD_TO_CART", payload: product });
+        toast.success(`${product.name} agregado al carrito!`, {
+            position: "bottom-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+    };
+    
+    // Nueva función para manejar el clic en la categoría y navegar
+    const handleCategoryClick = (categoryName) => {
+        navigate('/demo', { state: { category: categoryName } });
+    };
 
     return (
         <div className="home-container">
+            {/* Agregamos el ToastContainer al final del componente */}
+            <ToastContainer />
             {/* Sección del Carrusel (Carousel de Bootstrap) */}
             <section className="carousel-section">
                 <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
@@ -82,12 +109,17 @@ export const Home = () => {
                 <h2 className="text-center section-title">Categorías</h2>
                 <div className="row category-grid">
                     {categories.map(category => (
-                        <div key={category.id} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                        <div 
+                            key={category.id} 
+                            className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
+                            onClick={() => handleCategoryClick(category.name)}
+                            style={{ cursor: 'pointer' }}
+                        >
                             <div className="card category-card h-100">
                                 <img src={category.image} className="card-img-top category-image" alt={category.name} />
                                 <div className="card-body d-flex flex-column align-items-center text-center">
                                     <h3 className="card-title category-name">{category.name}</h3>
-                                    <button className="btn category-button mt-auto">Ver Más</button>
+                                    <div className="btn category-button mt-auto">Ver Más</div>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +175,7 @@ export const Home = () => {
             {/* Sección de Productos Destacados */}
             <section className="featured-products container bg-white section-wrapper">
                 <h2 className="text-center section-title">Nuestros Productos Destacados</h2>
-                <div id="productCarousel" className="carousel slide" data-bs-ride="carousel">
+                <div id="productCarousel" className="carousel slide" data-bs-ride="carousel" data-bs-wrap="true">
                     <div className="carousel-inner">
                         {/* Se crea un carousel-item por cada 4 productos */}
                         <div className="carousel-item active">
@@ -154,8 +186,14 @@ export const Home = () => {
                                             <img src={product.image} className="card-img-top product-image" alt={product.name} />
                                             <div className="card-body d-flex flex-column align-items-center text-center">
                                                 <h3 className="card-title product-name">{product.name}</h3>
-                                                <p className="card-text product-price">$ {product.price}</p>
-                                                <button className="btn buy-button mt-auto">Comprar</button>
+                                                {/* Formateamos el precio para mostrar los puntos */}
+                                                <p className="card-text product-price">$ {product.price.toLocaleString('es-CO')}</p>
+                                                {/* Agregamos el onClick al botón */}
+                                                <button 
+                                                    className="btn buy-button mt-auto"
+                                                    onClick={() => handleAddToCart(product)}>
+                                                    Comprar
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -170,8 +208,12 @@ export const Home = () => {
                                             <img src={product.image} className="card-img-top product-image" alt={product.name} />
                                             <div className="card-body d-flex flex-column align-items-center text-center">
                                                 <h3 className="card-title product-name">{product.name}</h3>
-                                                <p className="card-text product-price">$ {product.price}</p>
-                                                <button className="btn buy-button mt-auto">Comprar</button>
+                                                <p className="card-text product-price">$ {product.price.toLocaleString('es-CO')}</p>
+                                                <button 
+                                                    className="btn buy-button mt-auto"
+                                                    onClick={() => handleAddToCart(product)}>
+                                                    Comprar
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -186,8 +228,12 @@ export const Home = () => {
                                             <img src={product.image} className="card-img-top product-image" alt={product.name} />
                                             <div className="card-body d-flex flex-column align-items-center text-center">
                                                 <h3 className="card-title product-name">{product.name}</h3>
-                                                <p className="card-text product-price">$ {product.price}</p>
-                                                <button className="btn buy-button mt-auto">Comprar</button>
+                                                <p className="card-text product-price">$ {product.price.toLocaleString('es-CO')}</p>
+                                                <button 
+                                                    className="btn buy-button mt-auto"
+                                                    onClick={() => handleAddToCart(product)}>
+                                                    Comprar
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -225,7 +271,7 @@ export const Home = () => {
             </section>
 
             {/* Sección de Historia de la Marca */}
-           <section className="brand-story container bg-white section-wrapper">
+           <section id="historia-de-la-marca" className="brand-story container bg-white section-wrapper">
                 <div className="row align-items-center">
                 <div className="col-md-6 text-center text-md-start">
                      <h2 className="section-title">Nuestra Historia: El Arte del Cuero, Un Legado Familiar</h2>

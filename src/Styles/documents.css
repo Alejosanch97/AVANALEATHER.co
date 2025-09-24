@@ -1,0 +1,253 @@
+/* src/Styles/documents.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+.documents-page {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+.page-header {
+    background-color: #ffffff;
+    padding: 3rem 0;
+    border-bottom: 1px solid #e1e4e8;
+    text-align: center;
+}
+
+.page-header .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.page-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.breadcrumb-link {
+    color: #6c757d;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+.breadcrumb-link:hover {
+    color: #007bff;
+}
+
+.breadcrumb-separator {
+    margin: 0 0.5rem;
+    color: #ced4da;
+}
+
+.breadcrumb-current {
+    font-weight: 600;
+    color: #495057;
+}
+
+.main-content {
+    padding: 3rem 0;
+}
+
+.document-container {
+    background-color: #fff;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.document-content {
+    line-height: 1.8;
+}
+
+.document-content h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.document-content h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #333;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid #1a202c;
+    padding-left: 1rem;
+}
+
+.document-content p {
+    margin-bottom: 1.5rem;
+    color: #4a5568;
+}
+
+.document-content ul,
+.document-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: #4a5568;
+}
+
+.document-content ul li,
+.document-content ol li {
+    margin-bottom: 0.75rem;
+}
+
+.document-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.document-content th,
+.document-content td {
+    padding: 15px 20px;
+    border: none;
+    text-align: left;
+}
+
+.document-content thead th {
+    background-color: #1a202c;
+    color: #fff;
+    font-weight: 600;
+}
+
+.document-content tbody tr:nth-child(even) {
+    background-color: #f7f9fc;
+}
+
+.document-content tbody tr:hover {
+    background-color: #e2e8f0;
+    transition: background-color 0.3s ease;
+}
+
+/* Estilos mejorados para la sección de Contacto */
+.contact-info-container {
+    text-align: center;
+}
+
+.contact-intro {
+    font-size: 1.1rem;
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+}
+
+.contact-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+}
+
+.contact-card {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 250px;
+}
+
+.contact-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.contact-card i {
+    font-size: 2.5rem;
+    color: #1a202c;
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+}
+
+.contact-card:hover i {
+    color: #007bff;
+}
+
+.contact-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.contact-card-value {
+    font-size: 0.9rem;
+    color: #6c757d;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.contact-hours {
+    margin-top: 3rem;
+    font-style: italic;
+    color: #6c757d;
+}
+
+/* Estilos de carga */
+.document-container.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #1a202c;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+.loading-text {
+    margin-top: 1rem;
+    color: #555;
+    font-size: 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.not-found-title {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.not-found-text {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #777;
+}

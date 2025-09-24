@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../Styles/footer.css';
 
 export const Footer = () => (
@@ -9,7 +10,7 @@ export const Footer = () => (
                 <div className="col-lg-3 col-md-6 mb-4">
                     <h5 className="footer-title">Síguenos en redes:</h5>
                     <div className="social-icons">
-                        <a href="https://www.instagram.com/tu-instagram" target="_blank" rel="noopener noreferrer" className="social-icon">
+                        <a href="https://www.instagram.com/avanaleather/" target="_blank" rel="noopener noreferrer" className="social-icon">
                             <i className="fa-brands fa-instagram"></i>
                         </a>
                         <a href="https://wa.me/573225109005" target="_blank" rel="noopener noreferrer" className="social-icon">
@@ -22,11 +23,11 @@ export const Footer = () => (
                 <div className="col-lg-3 col-md-6 mb-4">
                     <h5 className="footer-title">Información</h5>
                     <ul className="footer-links list-unstyled">
-                        <li><a href="#">Términos de servicio</a></li>
-                        <li><a href="#">Política de privacidad</a></li>
-                        <li><a href="#">Política de reembolso</a></li>
-                        <li><a href="#">Política de envío</a></li>
-                        <li><a href="#">Información de contacto</a></li>
+                        <li><Link to="/docs/terminos-y-condiciones">Términos de servicio</Link></li>
+                        <li><Link to="/docs/politica-de-privacidad">Política de privacidad</Link></li>
+                        <li><Link to="/docs/politica-de-reembolso">Política de reembolso</Link></li>
+                        <li><Link to="/docs/politica-de-envio">Política de envío</Link></li>
+                        <li><Link to="/docs/informacion-de-contacto">Información de contacto</Link></li>
                     </ul>
                 </div>
 
@@ -35,7 +36,7 @@ export const Footer = () => (
                     <h5 className="footer-title">Ayuda</h5>
                     <ul className="footer-links list-unstyled">
                         <li><a href="#">Preguntas frecuentes</a></li>
-                        <li><a href="#">Garantía</a></li>
+                        <li><Link to="/docs/garantia-y-devoluciones">Garantía</Link></li>
                         <li><a href="#">Cuidados para tus productos</a></li>
                     </ul>
                 </div>

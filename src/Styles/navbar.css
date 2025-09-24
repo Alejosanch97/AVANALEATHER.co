@@ -2,7 +2,7 @@
 
 /* Estilos generales del navbar */
 .avana-navbar {
-    background-color: #f8f6f5 !important;
+    background-color: #d7794a !important;
     padding: 1rem 2rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     position: sticky;
@@ -47,12 +47,12 @@
 }
 
 .avana-navbar .nav-link:hover {
-    color: #8b4513 !important;
+    color: #ffffff !important;
 }
 
 /* Estilos de los iconos del carrito y WhatsApp */
 .nav-icon-btn {
-    color: #555;
+    color: #070707;
     background-color: transparent;
     border: none;
     font-size: 1.5rem;
@@ -61,7 +61,7 @@
 }
 
 .nav-icon-btn:hover {
-    color: #8b4513;
+    color: #fdfcfb;
 }
 
 /* Media Queries para Responsividad en Móviles */

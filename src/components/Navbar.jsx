@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { CartModal } from "./CartModal.jsx"; // Asegúrate de que esta ruta sea correcta
+import useGlobalReducer from "../hooks/useGlobalReducer.jsx"; // Asegúrate de que esta ruta sea correcta
 import "../Styles/navbar.css";
 
 export const Navbar = () => {
+    // Estado local para controlar la visibilidad del modal del carrito
+    const [showCart, setShowCart] = useState(false);
+
+    // Accedemos al estado global del carrito
+    const { store } = useGlobalReducer();
+    const { cart } = store;
+
+    // Funciones para mostrar y ocultar el modal
+    const handleShowCart = () => setShowCart(true);
+    const handleCloseCart = () => setShowCart(false);
+
     return (
         <nav className="navbar avana-navbar navbar-expand-lg">
             <div className="container-fluid d-flex justify-content-between align-items-center">
@@ -13,10 +26,10 @@ export const Navbar = () => {
                             <Link to="/" className="nav-link">Inicio</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/nosotros" className="nav-link">Nosotros</Link>
+                            <Link to="/#historia-de-la-marca" className="nav-link">Nosotros</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/productos" className="nav-link">Productos</Link>
+                            <Link to="/demo" className="nav-link">Productos</Link>
                         </li>
                         <li className="nav-item">
                             <Link to="/contacto" className="nav-link">Contacto</Link>
@@ -26,8 +39,14 @@ export const Navbar = () => {
                             <a href="https://wa.me/573225109005" target="_blank" rel="noopener noreferrer" className="btn nav-icon-btn">
                                 <i className="fa-brands fa-whatsapp"></i>
                             </a>
-                            <button className="btn nav-icon-btn">
+                            {/* Se agregó la funcionalidad onClick y el contador al botón del carrito para móviles */}
+                            <button className="btn nav-icon-btn position-relative" onClick={handleShowCart}>
                                 <i className="fa-solid fa-cart-shopping"></i>
+                                {cart.length > 0 && (
+                                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        {cart.length}
+                                    </span>
+                                )}
                             </button>
                         </li>
                     </ul>
@@ -55,8 +74,14 @@ export const Navbar = () => {
 
                     {/* Íconos para vista de escritorio */}
                     <div className="d-none d-lg-flex align-items-center">
-                        <button className="btn nav-icon-btn">
+                        {/* Se agregó la funcionalidad onClick y el contador al botón del carrito para escritorio */}
+                        <button className="btn nav-icon-btn position-relative" onClick={handleShowCart}>
                             <i className="fa-solid fa-cart-shopping"></i>
+                            {cart.length > 0 && (
+                                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {cart.length}
+                                </span>
+                            )}
                         </button>
                         <a href="https://wa.me/573225109005" target="_blank" rel="noopener noreferrer" className="btn nav-icon-btn">
                             <i className="fa-brands fa-whatsapp"></i>
@@ -64,6 +89,9 @@ export const Navbar = () => {
                     </div>
                 </div>
             </div>
+            
+            {/* Se agregó el componente del modal del carrito al final del navbar */}
+            <CartModal show={showCart} handleClose={handleCloseCart} />
         </nav>
     );
 };

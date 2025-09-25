@@ -49,7 +49,7 @@ export const CartModal = ({ show, handleClose }) => {
 
     const handleConfirmOrder = () => {
         handleClose();
-        navigate('/order-summary');
+        navigate('/order-summary', { state: { scroll: true } });
     };
 
     return (

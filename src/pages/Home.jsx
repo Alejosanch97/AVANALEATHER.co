@@ -1,3 +1,5 @@
+// src/pages/Home.jsx
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
@@ -12,7 +14,6 @@ export const Home = () => {
 
     // Datos de los Productos Destacados
     const products = [
-        // Importante: Los precios ahora son números para poder hacer cálculos
         { id: 1, name: 'Bolso Avana', price: 180000, category: 'Bolsos', image: 'https://i.pinimg.com/736x/97/cd/c4/97cdc45be52a44ef611eb487fbfa0c10.jpg' },
         { id: 2, name: 'Bolso Jade', price: 190000, category: 'Bolsos', image: 'https://i.pinimg.com/736x/c0/45/a4/c045a4e9f12b4cf6d081454919a5040f.jpg' },
         { id: 3, name: 'Bolso Navy', price: 200000, category: 'Bolsos', image: 'https://i.pinimg.com/736x/8b/8e/66/8b8e662a04d1ba2d4e8ff150e0a4c779.jpg' },
@@ -32,7 +33,6 @@ export const Home = () => {
         { id: 4, name: 'Complementos', image: 'https://i.pinimg.com/1200x/16/d0/63/16d063d4e547f385968ce82f1822fdd6.jpg' },
     ];
     
-    
     // Función para añadir productos al carrito
     const handleAddToCart = (product) => {
         dispatch({ type: "ADD_TO_CART", payload: product });
@@ -50,6 +50,20 @@ export const Home = () => {
     // Nueva función para manejar el clic en la categoría y navegar
     const handleCategoryClick = (categoryName) => {
         navigate('/demo', { state: { category: categoryName } });
+    };
+
+    // FUNCIÓN PARA MOSTRAR LA NOTIFICACIÓN DE GIFT CARD
+    const handleGiftCardClick = (e) => {
+        e.preventDefault(); // Evita que el enlace recargue la página
+        toast.info("¡Próximamente! Estamos trabajando para que puedas comprar tus Gift Cards.", {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
     };
 
     return (
@@ -128,8 +142,8 @@ export const Home = () => {
             </section>
 
             {/* Nueva Sección: El Alma de Avana */}
-            <section className="quality-section bg-light-gray section-wrapper"> {/* Eliminamos 'container' de aquí */}
-                <div className="container"> {/* Agregamos el container aquí para el contenido interno */}
+            <section className="quality-section bg-light-gray section-wrapper">
+                <div className="container">
                     <h2 className="text-center section-title mb-5">Detalles que Marcan la Diferencia</h2>
                     <div className="row justify-content-center align-items-center">
                         {/* Columna Izquierda */}
@@ -169,7 +183,7 @@ export const Home = () => {
                             </div>
                         </div>
                     </div>
-                </div> {/* Cierre del nuevo container */}
+                </div>
             </section>
             
             {/* Sección de Productos Destacados */}
@@ -186,9 +200,7 @@ export const Home = () => {
                                             <img src={product.image} className="card-img-top product-image" alt={product.name} />
                                             <div className="card-body d-flex flex-column align-items-center text-center">
                                                 <h3 className="card-title product-name">{product.name}</h3>
-                                                {/* Formateamos el precio para mostrar los puntos */}
                                                 <p className="card-text product-price">$ {product.price.toLocaleString('es-CO')}</p>
-                                                {/* Agregamos el onClick al botón */}
                                                 <button 
                                                     className="btn buy-button mt-auto"
                                                     onClick={() => handleAddToCart(product)}>
@@ -252,7 +264,7 @@ export const Home = () => {
                 </div>
             </section>
 
-            {/* Nueva Sección: Gift Card */}
+            {/* Sección de Gift Card */}
             <section className="gift-card-section bg-light-gray">
                 <video className="d-block w-100 gift-card-media" autoPlay muted loop playsInline>
                     <source src="./src/assets/img/4452751-hd_1920_1080_25fps.mp4" type="video/mp4" />
@@ -262,7 +274,8 @@ export const Home = () => {
                     <div className="gift-card-box">
                         <h2 className="gift-card-title">GIFT CARD</h2>
                         <p className="gift-card-subtitle">VIRTUAL</p>
-                        <a href="#" className="btn gift-card-button">
+                        {/* Agregamos el evento onClick y el estilo de cursor */}
+                        <a href="#" className="btn gift-card-button" onClick={handleGiftCardClick}>
                             <span>GIFT CARD</span>
                             <span className="arrow">→</span>
                         </a>
@@ -300,7 +313,6 @@ export const Home = () => {
                 </div>
             </div>
             </section>
-
         </div>
     );
 };

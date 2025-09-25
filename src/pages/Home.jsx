@@ -81,7 +81,7 @@ export const Home = () => {
                     <div className="carousel-inner">
                         <div className="carousel-item active">
                             <video className="d-block w-100 carousel-media" autoPlay muted loop playsInline>
-                                <source src="./src/assets/img/5758634-uhd_3840_2160_30fps.mp4" type="video/mp4" />
+                                <source src="./5758634-uhd_3840_2160_30fps.mp4" type="video/mp4" />
                                 Tu navegador no soporta videos.
                             </video>
                             <div className="carousel-caption d-none d-md-block">
@@ -90,10 +90,10 @@ export const Home = () => {
                             </div>
                         </div>
                         <div className="carousel-item">
-                            <img src="./src/assets/img/avana1.png" className="d-block w-100 carousel-media" alt="Avana Leather Logo" />
+                            <img src="./avana1.png" className="d-block w-100 carousel-media" alt="Avana Leather Logo" />
                         </div>
                         <div className="carousel-item">
-                            <img src="./src/assets/img/avana2.jpg" className="d-block w-100 carousel-media" alt="Descuento especial" />
+                            <img src="./avana2.jpg" className="d-block w-100 carousel-media" alt="Descuento especial" />
                             <div className="carousel-caption d-none d-md-block">
                                 <h1>¡-30% en toda la tienda!</h1>
                                 <p>Aprovecha nuestros precios de liquidación por tiempo limitado.</p>
@@ -164,7 +164,7 @@ export const Home = () => {
 
                         {/* Columna Central para la Imagen */}
                         <div className="col-md-4 text-center">
-                            <img src="./src/assets/img/avana3.png" className="img-fluid central-image" alt="Detalles de calidad del producto" />
+                            <img src="./avana3.png" className="img-fluid central-image" alt="Detalles de calidad del producto" />
                         </div>
 
                         {/* Columna Derecha */}
@@ -267,7 +267,7 @@ export const Home = () => {
             {/* Sección de Gift Card */}
             <section className="gift-card-section bg-light-gray">
                 <video className="d-block w-100 gift-card-media" autoPlay muted loop playsInline>
-                    <source src="./src/assets/img/4452751-hd_1920_1080_25fps.mp4" type="video/mp4" />
+                    <source src="./4452751-hd_1920_1080_25fps.mp4" type="video/mp4" />
                     Tu navegador no soporta videos.
                 </video>
                 <div className="gift-card-content">
@@ -309,7 +309,7 @@ export const Home = () => {
                     </p>
                 </div>
                 <div className="col-md-6 text-center mt-3 mt-md-0">
-                    <img src="./src/assets/img/avana4.png" className="img-fluid story-image" alt="Historia de Avana Leather" />
+                    <img src="./avana4.png" className="img-fluid story-image" alt="Historia de Avana Leather" />
                 </div>
             </div>
             </section>

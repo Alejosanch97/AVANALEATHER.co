@@ -366,3 +366,163 @@
     margin: 2rem auto;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
+
+/* --- RESPONSIVIDAD OPTIMIZADA --- */
+
+/* Estilos para pantallas pequeñas (móviles) */
+/* Estilos para pantallas pequeñas (móviles) */
+@media (max-width: 767.98px) {
+    .page-header {
+        padding: 1.5rem 0; /* Reducir aún más el padding */
+    }
+
+    .page-title {
+        font-size: 1.8rem; /* Tamaño de fuente más apropiado */
+    }
+
+    .breadcrumbs {
+        font-size: 0.8rem; /* Reducir tamaño de las migas de pan */
+    }
+
+    .main-content {
+        padding: 2rem 0; /* Reducir padding de contenido principal */
+    }
+
+    .document-container {
+        padding: 1rem; /* Reducir el padding interno del documento */
+        box-shadow: none; /* Eliminar sombra */
+        border-radius: 0;
+    }
+
+    /* Ajustes críticos para la legibilidad del texto */
+    .document-content {
+        line-height: 1.6; /* Reducir ligeramente el interlineado */
+        font-size: 0.95rem; /* Tamaño de fuente base más pequeño */
+    }
+    
+    .document-content p {
+        margin-bottom: 1rem;
+    }
+
+    .document-content h2 {
+        font-size: 1.4rem; /* H2 más pequeño */
+        margin-top: 2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .document-content h3 {
+        font-size: 1.15rem; /* H3 más pequeño */
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        padding-left: 0.75rem; /* Reducir padding del borde izquierdo */
+    }
+    
+    /* Contacto */
+    .contact-card {
+        padding: 1.5rem; /* Reducir padding de las tarjetas de contacto */
+        max-width: none;
+    }
+
+    .contact-card i {
+        font-size: 2rem;
+    }
+    
+    .contact-card-title {
+        font-size: 1rem;
+    }
+    
+    .contact-card-value {
+        font-size: 0.8rem;
+    }
+
+    /* Preguntas Frecuentes */
+    .faq-question {
+        font-size: 1.1rem;
+    }
+
+    .faq-answer {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    
+    /* Configuración de tabla para móvil (ya existente, la dejamos) */
+    .document-content table, .document-content thead, .document-content tbody, .document-content th, .document-content td, .document-content tr {
+        display: block;
+    }
+
+    .document-content thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .document-content tr {
+        border: 1px solid #ccc;
+        margin-bottom: 1rem;
+    }
+
+    .document-content td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+    }
+
+    .document-content td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+    }
+
+    .contact-cards {
+        flex-direction: column; 
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .contact-card {
+        width: 100%; 
+    }
+
+    .faq-item {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+    }
+
+    .faq-question {
+        font-size: 1.1rem;
+    }
+}
+
+/* 📱 Dispositivos extra pequeños (Ej: iPhone SE, Anchos < 450px) */
+/* Añadimos este bloque para una reducción extra en pantallas muy pequeñas */
+@media (max-width: 450px) {
+    .page-title {
+        font-size: 1.5rem;
+    }
+    
+    .document-content {
+        font-size: 0.9rem; /* Reducción máxima del texto base */
+    }
+
+    .document-content h2 {
+        font-size: 1.3rem;
+    }
+
+    .document-content h3 {
+        font-size: 1.0rem;
+    }
+    
+    .contact-card {
+        padding: 1rem;
+    }
+    
+    .contact-card-value {
+        font-size: 0.75rem;
+    }
+}

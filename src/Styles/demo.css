@@ -1,15 +1,6 @@
 /* src/Styles/demo.css */
 
 /* --- ENCABEZADO Y BREADCRUMB FIJOS --- */
-/* Debes aplicar un estilo para hacer que la barra de navegación sea fija */
-/*
-  .navbar-header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background-color: #fff;
-  }
-*/
 
 /* Contenedor principal para la página de demostración */
 .demo-page {
@@ -17,7 +8,7 @@
     padding-bottom: 3rem;
     background-color: #f8f8f8;
     position: relative;
-    z-index: 1; /* Para controlar el apilamiento de capas */
+    z-index: 1;
 }
 
 /* Breadcrumb - Aseguramos que se mantenga fijo al bajar */
@@ -26,11 +17,10 @@
     padding: 0;
     margin-left: 1rem;
     margin-right: 1rem;
-    /* Para que el breadcrumb también se quede fijo, si no es parte de la barra de navegación */
     position: sticky;
     top: 0; 
     z-index: 500;
-    background-color: #fff; /* Fondo para que no se vea el contenido de abajo */
+    background-color: #fff; 
 }
 
 .breadcrumb-item a {
@@ -42,14 +32,14 @@
     color: #333;
 }
 
-/* --- COLUMNA DE FILTROS FIJA Y MEJORADA --- */
+/* --- COLUMNA DE FILTROS FIJA Y MEJORADA (ESCRITORIO) --- */
 .filters-column {
     background-color: #fff;
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     position: sticky;
-    top: 5rem; /* Ajustado para que se pegue debajo del breadcrumb */
+    top: 5rem; 
     align-self: flex-start;
     z-index: 100;
 }
@@ -114,16 +104,9 @@
     cursor: pointer;
 }
 
-/* Filtro de Categoría/Subcategoría */
+/* Filtro de Categoría */
 .category-list .form-check {
     margin-bottom: 0.5rem;
-}
-
-.subcategory-list {
-    margin-top: 0.3rem;
-    margin-bottom: 0.5rem;
-    border-left: 2px solid #eee;
-    padding-left: 10px;
 }
 
 .form-check-label {
@@ -172,7 +155,7 @@
     border: 1px solid #ccc;
 }
 
-/* Definiciones de colores para los puntos */
+/* Definiciones de colores (sin cambios) */
 .color-salmon { background-color: #FA8072; }
 .color-naranja { background-color: #FFA500; }
 .color-verde { background-color: #228B22; }
@@ -215,7 +198,7 @@
     margin-top: 1rem;
 }
 
-/* --- TARJETA DE PRODUCTO MEJORADA --- */
+/* --- TARJETA DE PRODUCTO MEJORADA (Sin cambios) --- */
 .product-card {
     border: 1px solid #e0e0e0;
     border-radius: 12px;
@@ -232,19 +215,6 @@
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
 }
 
-.product-new-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: #8b4513;
-    color: white;
-    padding: 0.2rem 0.6rem;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    z-index: 10;
-}
-
 .product-image {
     width: 100%;
     height: 280px;
@@ -252,7 +222,6 @@
     border-bottom: 1px solid #eee;
 }
 
-/* --- Cuerpo de la tarjeta (Mejoras de diseño y disposición) --- */
 .card-body {
     display: flex;
     flex-direction: column;
@@ -311,7 +280,6 @@
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
-/* Estilo para el hover de los puntos de color */
 .product-colors .color-dot {
     transition: transform 0.2s ease-in-out, border 0.2s ease-in-out;
 }
@@ -321,25 +289,169 @@
     border: 2px solid #333;
 }
 
-/* Responsividad */
-@media (max-width: 991.98px) {
-    .filters-column {
-        position: static;
-        margin-bottom: 2rem;
-        padding: 1.5rem;
+/* --- NUEVOS ESTILOS PARA FILTROS MÓVILES (Offcanvas/Modal) --- */
+
+/* Estiliza el botón de activación para que coincida con el tema */
+.mobile-filter-btn {
+    background-color: #8b4513;
+    border-color: #8b4513;
+    font-weight: 600;
+    padding: 0.75rem;
+    /* Aseguramos que el botón se vea bien en todos los anchos */
+    font-size: 1rem; 
+    transition: background-color 0.3s ease;
+}
+
+.mobile-filter-btn:hover {
+    background-color: #a0522d;
+    border-color: #a0522d;
+}
+
+/* Overlay (Fondo oscuro transparente) */
+.mobile-filters-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 2000; 
+    display: flex;
+    justify-content: flex-end; /* Deslizar desde la derecha */
+    align-items: flex-start;
+    overflow-y: hidden; /* Evita doble scroll */
+}
+
+/* Contenido del filtro (El "Offcanvas" deslizante) */
+.filters-content-modal {
+    background-color: #fff;
+    width: 85%; 
+    max-width: 400px; 
+    height: 100%;
+    padding: 2rem 1.5rem;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+    overflow-y: auto; /* Permite scroll dentro del modal si hay muchos filtros */
+    animation: slideInRight 0.3s forwards;
+}
+
+/* Botón de 'Ver Productos' dentro del modal */
+.filters-content-modal .btn-buy-product {
+    /* Usamos el mismo estilo del botón de comprar, pero aseguramos la visibilidad */
+    display: block;
+    margin-top: 2rem !important;
+}
+
+
+/* Animación de entrada Offcanvas */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
     }
-    .products-grid-container {
-        padding-left: 15px;
+    to {
+        transform: translateX(0);
     }
 }
-@media (max-width: 767.98px) {
+
+
+/* --- RESPONSIVIDAD RE-OPTIMIZADA (Ajustes para iPhone 11/Tablets) --- */
+
+/* Estilos para pantallas de tablet y móviles grandes (768px a 991px) */
+@media (max-width: 991.98px) {
+    /* Ocultamos la columna de filtros original (se hace principalmente con d-lg-none en JSX) */
     .filters-column {
-        padding: 1rem;
+        display: none; 
     }
-    .filters-title {
+    
+    /* El contenedor de productos ocupa todo el ancho */
+    .products-grid-container {
+        padding-left: 0.5rem; 
+        padding-right: 0.5rem;
+        width: 100%;
+    }
+    
+    /* Ajustes para el grid de tarjetas en tablets (2 columnas) */
+    .product-cards-grid .col-xl-4, .product-cards-grid .col-lg-6 {
+        /* Para que en MD (768px+) se vean 2 por fila (col-md-6) */
+        width: 50%;
+    }
+    
+    .product-image {
+        height: 250px;
+    }
+}
+
+/* Estilos para pantallas de móviles pequeños (iPhone 11, Pro, Pro Max: 375px - 767px) */
+@media (max-width: 767.98px) {
+    .demo-page {
+        padding: 1rem 0.5rem; /* Padding más compacto en los lados */
+    }
+    
+    /* El breadcrumb también necesita ajuste en el padding lateral */
+    .breadcrumb {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+    }
+    
+    /* Ajustamos el grid de productos para una columna en móviles */
+    .product-cards-grid .col-sm-6, .product-cards-grid .col-md-6, .product-cards-grid .col-lg-6 {
+        width: 100%; /* Una columna por producto en móvil */
+    }
+
+    .product-image {
+        height: 280px; /* Tamaño de imagen más grande para que se luzca en una sola columna */
+    }
+    
+    /* Reducción de fuentes para mejor legibilidad */
+    .product-card-title {
+        font-size: 1.4rem;
+    }
+    .product-price {
+        font-size: 1.6rem;
+    }
+    .btn-buy-product {
+        padding: 0.6rem 1.5rem; 
+        font-size: 0.9rem;
+    }
+
+    /* Offcanvas ocupa todo el ancho en móviles pequeños */
+    .filters-content-modal {
+        width: 100%; 
+        max-width: none;
+    }
+    
+    /* Ajuste del filtro de color para dispositivos pequeños */
+    .color-filter-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 columnas en móviles */
+        gap: 10px;
+    }
+    .color-dot-label input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+    }
+    .color-dot {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Media Query para pantallas muy pequeñas (menos de 375px) */
+@media (max-width: 374.98px) {
+    /* Ajustes mínimos para asegurar que el texto no se desborde */
+    .filters-title, .filter-heading {
+        font-size: 1.2rem;
+    }
+    .product-card-title {
+        font-size: 1.3rem;
+    }
+    .product-price {
         font-size: 1.5rem;
     }
-    .product-image {
-        height: 220px;
+    .btn-buy-product {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+    .color-filter-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas para el filtro de color */
+        gap: 8px;
     }
 }

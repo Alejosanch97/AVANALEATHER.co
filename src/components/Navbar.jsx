@@ -150,6 +150,8 @@ export const Navbar = () => {
                 
                 <CartModal show={showCart} handleClose={handleCloseCart} />
             </nav>
+            <div class="menu-overlay"></div>
+
 
             {/* Modal de contacto */}
             <div 

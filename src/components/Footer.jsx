@@ -52,9 +52,5 @@ export const Footer = () => (
             </div>
         </div>
 
-        {/* Ícono flotante de WhatsApp */}
-        <a href="https://wa.me/573225109005" className="whatsapp-float" target="_blank" rel="noopener noreferrer">
-            <i className="fa-brands fa-whatsapp"></i>
-        </a>
     </footer>
 );

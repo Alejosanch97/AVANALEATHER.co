@@ -1,244 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import useGlobalReducer from '../hooks/useGlobalReducer.jsx';
 import '../Styles/demo.css';
 
-export const Demo = () => {
-    const { store, dispatch } = useGlobalReducer();
-    const { allProducts } = store;
-    const location = useLocation();
-
-    // Estado inicial de los filtros, ahora se inicializan con el estado de navegación
-    const initialCategory = location.state?.category ? [location.state.category] : [];
-    
-    const [filteredProducts, setFilteredProducts] = useState(allProducts);
-    const [priceRange, setPriceRange] = useState([0, 300000]);
-    const [selectedCategories, setSelectedCategories] = useState(initialCategory);
-    const [selectedColors, setSelectedColors] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [sortBy, setSortBy] = useState('default');
-
-    // Estas variables ahora se calculan a partir de los datos del store
-    const uniqueCategories = [...new Set(allProducts.map(p => p.category))];
-    const uniqueColors = [...new Set(allProducts.flatMap(p => p.colors))];
-
-    // Nuevo useEffect para desplazar al inicio de la página
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
-
-    // useEffect para manejar el filtrado
-    useEffect(() => {
-        let tempProducts = [...allProducts];
-
-        // 1. Filtrar por búsqueda
-        if (searchTerm) {
-            tempProducts = tempProducts.filter(product =>
-                product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                product.reference.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-        }
-
-        // 2. Filtrar por categorías
-        if (selectedCategories.length > 0) {
-            tempProducts = tempProducts.filter(product => selectedCategories.includes(product.category));
-        }
-
-        // 3. Filtrar por colores
-        if (selectedColors.length > 0) {
-            tempProducts = tempProducts.filter(product => product.colors.some(color => selectedColors.includes(color)));
-        }
-
-        // 4. Filtrar por rango de precio
-        tempProducts = tempProducts.filter(product => product.price >= priceRange[0] && product.price <= priceRange[1]);
-
-        // 5. Ordenar los productos
-        if (sortBy === 'price_asc') {
-            tempProducts.sort((a, b) => a.price - b.price);
-        } else if (sortBy === 'price_desc') {
-            tempProducts.sort((a, b) => b.price - a.price);
-        } else if (sortBy === 'name_asc') {
-            tempProducts.sort((a, b) => a.name.localeCompare(b.name));
-        }
-
-        setFilteredProducts(tempProducts);
-    }, [selectedCategories, selectedColors, priceRange, searchTerm, sortBy, allProducts, location.state]);
-
-    const handleCategoryChange = (e) => {
-        const { value, checked } = e.target;
-        setSelectedCategories(prev =>
-            checked ? [...prev, value] : prev.filter(cat => cat !== value)
-        );
-    };
-
-    const handleColorChange = (e) => {
-        const { value, checked } = e.target;
-        setSelectedColors(prev =>
-            checked ? [...prev, value] : prev.filter(color => color !== value)
-        );
-    };
-
-    const handlePriceRangeChange = (e) => {
-        const { name, value } = e.target;
-        setPriceRange(prev => {
-            const newRange = [...prev];
-            if (name === "minPrice") newRange[0] = parseInt(value);
-            if (name === "maxPrice") newRange[1] = parseInt(value);
-            return newRange;
-        });
-    };
-
-    // La función 'handleAddToCart' ahora es más simple
-    const handleAddToCart = (product, color) => {
-        // Formateamos el nombre del color para asegurar que coincida con la clave del objeto 'images'
-        const formattedColor = color.toLowerCase().replace(/\s/g, '');
-
-        // Creamos el objeto del ítem del carrito, obteniendo la imagen por el color formateado
-        const itemToAdd = {
-            id: product.id,
-            name: product.name,
-            reference: product.reference,
-            price: product.price,
-            image: product.images[formattedColor] || product.mainImage,
-            selectedColor: color,
-            colors: product.colors,
-            images: product.images, // Sigue siendo crucial para el CartModal
-        };
-
-        dispatch({
-            type: "ADD_TO_CART",
-            payload: itemToAdd,
-        });
-    };
-
-    return (
-        <div className="demo-page container-fluid py-5">
-            <nav aria-label="breadcrumb" className="mb-4">
-                <ol className="breadcrumb">
-                    <li className="breadcrumb-item"><a href="/">Inicio</a></li>
-                    <li className="breadcrumb-item active" aria-current="page">Productos</li>
-                </ol>
-            </nav>
-
-            <div className="row">
-                <aside className="col-lg-3 col-md-4 col-sm-12 filters-column">
-                    <h4 className="filters-title mb-4">Filtrar Por</h4>
-
-                    <div className="filter-group mb-4 pb-3 border-bottom">
-                        <h5 className="filter-heading">Precio</h5>
-                        <div className="price-range-display mb-2">
-                            $ {priceRange[0].toLocaleString('es-CO')} - $ {priceRange[1].toLocaleString('es-CO')}
-                        </div>
-                        <div className="d-flex align-items-center justify-content-between">
-                            <input
-                                type="range"
-                                min="0"
-                                max="300000"
-                                value={priceRange[0]}
-                                name="minPrice"
-                                onChange={handlePriceRangeChange}
-                                className="form-range"
-                            />
-                        </div>
-                        <div className="d-flex justify-content-between mt-2">
-                            <small>$0</small>
-                            <small>$300.000+</small>
-                        </div>
-                    </div>
-
-                    <div className="filter-group mb-4 pb-3 border-bottom">
-                        <h5 className="filter-heading">Categoría</h5>
-                        <div className="category-list">
-                            {uniqueCategories.map(category => (
-                                <div key={category} className="form-check">
-                                    <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        value={category}
-                                        id={`cat-${category}`}
-                                        checked={selectedCategories.includes(category)}
-                                        onChange={handleCategoryChange}
-                                    />
-                                    <label className="form-check-label" htmlFor={`cat-${category}`}>
-                                        {category}
-                                    </label>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="filter-group mb-4 pb-3 border-bottom">
-                        <h5 className="filter-heading">Color</h5>
-                        <div className="color-filter-grid">
-                            {uniqueColors.map(color => (
-                                <div key={color} className="form-check form-check-inline">
-                                    <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        value={color}
-                                        id={`color-${color}`}
-                                        checked={selectedColors.includes(color)}
-                                        onChange={handleColorChange}
-                                    />
-                                    <label className="form-check-label color-dot-label" htmlFor={`color-${color}`}>
-                                        <span className={`color-dot color-${color.toLowerCase().replace(/\s/g, '')}`} title={color}></span>
-                                    </label>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </aside>
-
-                <main className="col-lg-9 col-md-8 col-sm-12 products-grid-container">
-                    <div className="d-flex justify-content-between align-items-center mb-4">
-                        <p className="product-count mb-0">Hay {filteredProducts.length} productos</p>
-                        <div className="sort-by-group d-flex align-items-center">
-                            <label htmlFor="sortSelect" className="me-2 text-muted">Ordenar por:</label>
-                            <select
-                                id="sortSelect"
-                                className="form-select"
-                                value={sortBy}
-                                onChange={(e) => setSortBy(e.target.value)}
-                            >
-                                <option value="default">Seleccionar</option>
-                                <option value="name_asc">Nombre (A-Z)</option>
-                                <option value="price_asc">Precio (Menor a Mayor)</option>
-                                <option value="price_desc">Precio (Mayor a Menor)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="row product-cards-grid">
-                        {filteredProducts.length === 0 ? (
-                            <div className="col-12 text-center py-5">
-                                <p className="lead">No se encontraron productos con los filtros seleccionados.</p>
-                                <button className="btn btn-outline-secondary" onClick={() => {
-                                    setSelectedCategories([]);
-                                    setSelectedColors([]);
-                                    setPriceRange([0, 300000]);
-                                    setSearchTerm('');
-                                    setSortBy('default');
-                                }}>
-                                    Borrar Filtros
-                                </button>
-                            </div>
-                        ) : (
-                            filteredProducts.map(product => (
-                                <ProductCard 
-                                    key={product.id} 
-                                    product={product} 
-                                    handleAddToCart={handleAddToCart}
-                                />
-                            ))
-                        )}
-                    </div>
-                </main>
-            </div>
-        </div>
-    );
-};
-
-// Componente individual de la tarjeta de producto
+// Componente individual de la tarjeta de producto (sin cambios)
 const ProductCard = ({ product, handleAddToCart }) => {
     // Estado local para la imagen actual
     const [currentImage, setCurrentImage] = useState(product.mainImage);
@@ -309,6 +74,286 @@ const ProductCard = ({ product, handleAddToCart }) => {
                     </button>
                 </div>
             </div>
+        </div>
+    );
+};
+
+export const Demo = () => {
+    const { store, dispatch } = useGlobalReducer();
+    const { allProducts } = store;
+    const location = useLocation();
+
+    const initialCategory = location.state?.category ? [location.state.category] : [];
+    
+    const [filteredProducts, setFilteredProducts] = useState(allProducts);
+    const [priceRange, setPriceRange] = useState([0, 300000]);
+    const [selectedCategories, setSelectedCategories] = useState(initialCategory);
+    const [selectedColors, setSelectedColors] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [sortBy, setSortBy] = useState('default');
+    
+    // NUEVO ESTADO para controlar si los filtros están visibles en móvil (Offcanvas)
+    const [showMobileFilters, setShowMobileFilters] = useState(false); 
+
+    const uniqueCategories = [...new Set(allProducts.map(p => p.category))];
+    const uniqueColors = [...new Set(allProducts.flatMap(p => p.colors))];
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    // Función de filtrado: se envuelve en useCallback para evitar re-renderizados innecesarios, aunque no es estrictamente necesario en este contexto.
+    const runFilters = useCallback(() => {
+        let tempProducts = [...allProducts];
+
+        // 1. Filtrar por búsqueda
+        if (searchTerm) {
+            tempProducts = tempProducts.filter(product =>
+                product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                product.reference.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        }
+
+        // 2. Filtrar por categorías
+        if (selectedCategories.length > 0) {
+            tempProducts = tempProducts.filter(product => selectedCategories.includes(product.category));
+        }
+
+        // 3. Filtrar por colores
+        if (selectedColors.length > 0) {
+            tempProducts = tempProducts.filter(product => product.colors.some(color => selectedColors.includes(color)));
+        }
+
+        // 4. Filtrar por rango de precio
+        tempProducts = tempProducts.filter(product => product.price >= priceRange[0] && product.price <= priceRange[1]);
+
+        // 5. Ordenar los productos
+        if (sortBy === 'price_asc') {
+            tempProducts.sort((a, b) => a.price - b.price);
+        } else if (sortBy === 'price_desc') {
+            tempProducts.sort((a, b) => b.price - a.price);
+        } else if (sortBy === 'name_asc') {
+            tempProducts.sort((a, b) => a.name.localeCompare(b.name));
+        }
+
+        setFilteredProducts(tempProducts);
+    }, [selectedCategories, selectedColors, priceRange, searchTerm, sortBy, allProducts]);
+
+    useEffect(() => {
+        runFilters();
+    }, [runFilters, location.state]);
+
+    // HANDLERS (Sin cambios, pero se mantienen para completar el código)
+    const handleCategoryChange = (e) => {
+        const { value, checked } = e.target;
+        setSelectedCategories(prev =>
+            checked ? [...prev, value] : prev.filter(cat => cat !== value)
+        );
+    };
+
+    const handleColorChange = (e) => {
+        const { value, checked } = e.target;
+        setSelectedColors(prev =>
+            checked ? [...prev, value] : prev.filter(color => color !== value)
+        );
+    };
+
+    const handlePriceRangeChange = (e) => {
+        const { name, value } = e.target;
+        setPriceRange(prev => {
+            const newRange = [...prev];
+            if (name === "minPrice") newRange[0] = parseInt(value);
+            if (name === "maxPrice") newRange[1] = parseInt(value);
+            return newRange;
+        });
+    };
+    
+    // Función para añadir al carrito (Sin cambios)
+    const handleAddToCart = (product, color) => {
+        const formattedColor = color.toLowerCase().replace(/\s/g, '');
+        const itemToAdd = {
+            id: product.id,
+            name: product.name,
+            reference: product.reference,
+            price: product.price,
+            image: product.images[formattedColor] || product.mainImage,
+            selectedColor: color,
+            colors: product.colors,
+            images: product.images,
+        };
+
+        dispatch({
+            type: "ADD_TO_CART",
+            payload: itemToAdd,
+        });
+    };
+    
+    // *** FUNCIÓN AUXILIAR PARA RENDERIZAR EL CONTENIDO DE LOS FILTROS ***
+    // Esto evita la duplicación del código HTML del filtro.
+    const renderFilterContent = () => (
+        <>
+            <div className="filter-group mb-4 pb-3 border-bottom">
+                <h5 className="filter-heading">Precio</h5>
+                <div className="price-range-display mb-2">
+                    $ {priceRange[0].toLocaleString('es-CO')} - $ {priceRange[1].toLocaleString('es-CO')}
+                </div>
+                <div className="d-flex align-items-center justify-content-between">
+                    <input
+                        type="range"
+                        min="0"
+                        max="300000"
+                        value={priceRange[0]}
+                        name="minPrice"
+                        onChange={handlePriceRangeChange}
+                        className="form-range"
+                    />
+                </div>
+                <div className="d-flex justify-content-between mt-2">
+                    <small>$0</small>
+                    <small>$300.000+</small>
+                </div>
+            </div>
+
+            <div className="filter-group mb-4 pb-3 border-bottom">
+                <h5 className="filter-heading">Categoría</h5>
+                <div className="category-list">
+                    {uniqueCategories.map(category => (
+                        <div key={category} className="form-check">
+                            <input
+                                className="form-check-input"
+                                type="checkbox"
+                                value={category}
+                                id={`cat-${category}`}
+                                checked={selectedCategories.includes(category)}
+                                onChange={handleCategoryChange}
+                            />
+                            <label className="form-check-label" htmlFor={`cat-${category}`}>
+                                {category}
+                            </label>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div className="filter-group mb-4 pb-3 border-bottom">
+                <h5 className="filter-heading">Color</h5>
+                <div className="color-filter-grid">
+                    {uniqueColors.map(color => (
+                        <div key={color} className="form-check form-check-inline">
+                            <input
+                                className="form-check-input"
+                                type="checkbox"
+                                value={color}
+                                id={`color-${color}`}
+                                checked={selectedColors.includes(color)}
+                                onChange={handleColorChange}
+                            />
+                            <label className="form-check-label color-dot-label" htmlFor={`color-${color}`}>
+                                <span className={`color-dot color-${color.toLowerCase().replace(/\s/g, '')}`} title={color}></span>
+                            </label>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </>
+    );
+
+    // *** INICIO DEL RENDER PRINCIPAL ***
+    return (
+        <div className="demo-page container-fluid py-5">
+            <nav aria-label="breadcrumb" className="mb-4">
+                <ol className="breadcrumb">
+                    <li className="breadcrumb-item"><a href="/">Inicio</a></li>
+                    <li className="breadcrumb-item active" aria-current="page">Productos</li>
+                </ol>
+            </nav>
+
+            <div className="row">
+                
+                {/* 1. Botón de Filtro para Móviles (Visible sólo en pantallas pequeñas < 992px) */}
+                <div className="col-12 d-lg-none mb-4">
+                    <button 
+                        className="btn btn-primary w-100 mobile-filter-btn"
+                        onClick={() => setShowMobileFilters(true)}
+                    >
+                        Filtrar Productos
+                    </button>
+                </div>
+
+                {/* 2. Columna de Filtros de Escritorio (Oculta en móviles) */}
+                <aside className="col-lg-3 d-none d-lg-block filters-column">
+                    <h4 className="filters-title mb-4">Filtrar Por</h4>
+                    {renderFilterContent()}
+                </aside>
+
+                {/* 3. Contenedor Principal de Productos */}
+                <main className="col-lg-9 col-12 products-grid-container">
+                    <div className="d-flex justify-content-between align-items-center mb-4">
+                        <p className="product-count mb-0">Hay {filteredProducts.length} productos</p>
+                        <div className="sort-by-group d-flex align-items-center">
+                            <label htmlFor="sortSelect" className="me-2 text-muted">Ordenar por:</label>
+                            <select
+                                id="sortSelect"
+                                className="form-select"
+                                value={sortBy}
+                                onChange={(e) => setSortBy(e.target.value)}
+                            >
+                                <option value="default">Seleccionar</option>
+                                <option value="name_asc">Nombre (A-Z)</option>
+                                <option value="price_asc">Precio (Menor a Mayor)</option>
+                                <option value="price_desc">Precio (Mayor a Menor)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="row product-cards-grid">
+                        {filteredProducts.length === 0 ? (
+                            <div className="col-12 text-center py-5">
+                                <p className="lead">No se encontraron productos con los filtros seleccionados.</p>
+                                <button className="btn btn-outline-secondary" onClick={() => {
+                                    setSelectedCategories([]);
+                                    setSelectedColors([]);
+                                    setPriceRange([0, 300000]);
+                                    setSearchTerm('');
+                                    setSortBy('default');
+                                }}>
+                                    Borrar Filtros
+                                </button>
+                            </div>
+                        ) : (
+                            filteredProducts.map(product => (
+                                <ProductCard 
+                                    key={product.id} 
+                                    product={product} 
+                                    handleAddToCart={handleAddToCart}
+                                />
+                            ))
+                        )}
+                    </div>
+                </main>
+            </div>
+            
+            {/* 4. Overlay/Offcanvas para Filtros Móviles */}
+            {showMobileFilters && (
+                <div className="mobile-filters-overlay d-lg-none">
+                    <div className="filters-content-modal">
+                        <div className="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+                            <h4 className="filters-title mb-0">Filtrar Por</h4>
+                            <button className="btn-close" onClick={() => setShowMobileFilters(false)}></button>
+                        </div>
+                        
+                        {/* Contenido de los filtros renderizado por la función */}
+                        {renderFilterContent()}
+                        
+                        <button 
+                            className="btn btn-buy-product w-100 mt-4" 
+                            onClick={() => setShowMobileFilters(false)}
+                        >
+                            Ver {filteredProducts.length} Productos
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

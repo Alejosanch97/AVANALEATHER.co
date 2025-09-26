@@ -1,15 +1,23 @@
 // src/pages/Home.jsx
 
-import React from 'react';
+import React, { useState } from 'react'; // 👈 IMPORTADO: useState
 import { useNavigate } from 'react-router-dom';
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../Styles/home.css';
+import { FaShippingFast, FaCalendarCheck, FaCheckCircle, FaMoneyBillWave } from 'react-icons/fa';
+import { CartModal } from "../components/CartModal.jsx"; // 👈 IMPORTADO: CartModal (Ajusta la ruta si es necesario)
+
 
 export const Home = () => {
+    // Lógica del Carrito (Copiada de Navbar)
+    const [showCart, setShowCart] = useState(false);
+    const handleShowCart = () => setShowCart(true);
+    const handleCloseCart = () => setShowCart(false);
 
     const { store, dispatch } = useGlobalReducer();
+    const { cart } = store; // 👈 OBTENER el contenido del carrito
     const navigate = useNavigate();
 
     // Datos de los Productos Destacados
@@ -32,7 +40,7 @@ export const Home = () => {
         { id: 3, name: 'Accesorios', image: 'https://i.pinimg.com/736x/03/17/f2/0317f236a8c3ad7610c61ff9f961f3f5.jpg' },
         { id: 4, name: 'Complementos', image: 'https://i.pinimg.com/1200x/16/d0/63/16d063d4e547f385968ce82f1822fdd6.jpg' },
     ];
-    
+
     // Función para añadir productos al carrito
     const handleAddToCart = (product) => {
         dispatch({ type: "ADD_TO_CART", payload: product });
@@ -46,7 +54,7 @@ export const Home = () => {
             progress: undefined,
         });
     };
-    
+
     // Nueva función para manejar el clic en la categoría y navegar
     const handleCategoryClick = (categoryName) => {
         navigate('/demo', { state: { category: categoryName } });
@@ -84,17 +92,80 @@ export const Home = () => {
                                 <source src="./5758634-uhd_3840_2160_30fps.mp4" type="video/mp4" />
                                 Tu navegador no soporta videos.
                             </video>
-                            <div className="carousel-caption d-none d-md-block">
+                            <div className="carousel-caption">
                                 <h1>Calidad y Tradición</h1>
                                 <p>Productos de cuero hechos a mano con pasión. Descubre el arte de la marroquinería.</p>
                             </div>
                         </div>
                         <div className="carousel-item">
-                            <img src="./avana1.png" className="d-block w-100 carousel-media" alt="Avana Leather Logo" />
+                            {/* La imagen de fondo */}
+                            <img
+                                src="./avna5.png"
+                                className="d-block w-100 carousel-media"
+                                alt="Avana Leather Banner"
+                            />
+
+                            {/* Contenedor principal del texto y las cards */}
+                            <div className="custom-caption-overlay d-flex flex-column align-items-center justify-content-center text-center text-white px-4">
+                                {/* Título principal */}
+                                <h1 className="avana-title">
+                                    AVANA LEATHER
+                                </h1>
+
+                                {/* Contenedor de las mini cards */}
+                                <div className="container info-boxes-container">
+                                    <div className="row g-3 justify-content-center"> {/* g-3 para un gap más pequeño */}
+                                        {/* 1️⃣ Envíos */}
+                                        {/* col-md-3 es correcto para 4 en línea */}
+                                        <div className="col-12 col-sm-6 col-md-3">
+                                            <div className="info-box d-flex flex-column align-items-center p-3">
+                                                <div className="info-icon mb-2">
+                                                    <FaShippingFast size={32} /> {/* Íconos un poco más pequeños */}
+                                                </div>
+                                                <h3 className="info-box-title">ENVIOS</h3>
+                                                <p className="info-box-text">Cobertura en todo el país</p>
+                                            </div>
+                                        </div>
+
+                                        {/* 2️⃣ Entregas */}
+                                        <div className="col-12 col-sm-6 col-md-3">
+                                            <div className="info-box d-flex flex-column align-items-center p-3">
+                                                <div className="info-icon mb-2">
+                                                    <FaCalendarCheck size={32} />
+                                                </div>
+                                                <h3 className="info-box-title">ENTREGAS</h3>
+                                                <p className="info-box-text">De 2 a 5 días hábiles</p>
+                                            </div>
+                                        </div>
+
+                                        {/* 3️⃣ Calidad */}
+                                        <div className="col-12 col-sm-6 col-md-3">
+                                            <div className="info-box d-flex flex-column align-items-center p-3">
+                                                <div className="info-icon mb-2">
+                                                    <FaCheckCircle size={32} />
+                                                </div>
+                                                <h3 className="info-box-title">CALIDAD</h3>
+                                                <p className="info-box-text">100% CUERO</p>
+                                            </div>
+                                        </div>
+
+                                        {/* 4️⃣ Pagos */}
+                                        <div className="col-12 col-sm-6 col-md-3">
+                                            <div className="info-box d-flex flex-column align-items-center p-3">
+                                                <div className="info-icon mb-2">
+                                                    <FaMoneyBillWave size={32} />
+                                                </div>
+                                                <h3 className="info-box-title">PAGOS</h3>
+                                                <p className="info-box-text">Contra entrega</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div className="carousel-item">
                             <img src="./avana2.jpg" className="d-block w-100 carousel-media" alt="Descuento especial" />
-                            <div className="carousel-caption d-none d-md-block">
+                            <div className="carousel-caption">
                                 <h1>¡-30% en toda la tienda!</h1>
                                 <p>Aprovecha nuestros precios de liquidación por tiempo limitado.</p>
                             </div>
@@ -123,8 +194,8 @@ export const Home = () => {
                 <h2 className="text-center section-title">Categorías</h2>
                 <div className="row category-grid">
                     {categories.map(category => (
-                        <div 
-                            key={category.id} 
+                        <div
+                            key={category.id}
                             className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
                             onClick={() => handleCategoryClick(category.name)}
                             style={{ cursor: 'pointer' }}
@@ -185,7 +256,7 @@ export const Home = () => {
                     </div>
                 </div>
             </section>
-            
+
             {/* Sección de Productos Destacados */}
             <section className="featured-products container bg-white section-wrapper">
                 <h2 className="text-center section-title">Nuestros Productos Destacados</h2>
@@ -201,7 +272,7 @@ export const Home = () => {
                                             <div className="card-body d-flex flex-column align-items-center text-center">
                                                 <h3 className="card-title product-name">{product.name}</h3>
                                                 <p className="card-text product-price">$ {product.price.toLocaleString('es-CO')}</p>
-                                                <button 
+                                                <button
                                                     className="btn buy-button mt-auto"
                                                     onClick={() => handleAddToCart(product)}>
                                                     Comprar
@@ -221,7 +292,7 @@ export const Home = () => {
                                             <div className="card-body d-flex flex-column align-items-center text-center">
                                                 <h3 className="card-title product-name">{product.name}</h3>
                                                 <p className="card-text product-price">$ {product.price.toLocaleString('es-CO')}</p>
-                                                <button 
+                                                <button
                                                     className="btn buy-button mt-auto"
                                                     onClick={() => handleAddToCart(product)}>
                                                     Comprar
@@ -241,7 +312,7 @@ export const Home = () => {
                                             <div className="card-body d-flex flex-column align-items-center text-center">
                                                 <h3 className="card-title product-name">{product.name}</h3>
                                                 <p className="card-text product-price">$ {product.price.toLocaleString('es-CO')}</p>
-                                                <button 
+                                                <button
                                                     className="btn buy-button mt-auto"
                                                     onClick={() => handleAddToCart(product)}>
                                                     Comprar
@@ -284,35 +355,66 @@ export const Home = () => {
             </section>
 
             {/* Sección de Historia de la Marca */}
-           <section id="historia-de-la-marca" className="brand-story container bg-white section-wrapper">
+            <section id="historia-de-la-marca" className="brand-story container bg-white section-wrapper">
                 <div className="row align-items-center">
-                <div className="col-md-6 text-center text-md-start">
-                     <h2 className="section-title">Nuestra Historia: El Arte del Cuero, Un Legado Familiar</h2>
-                     <p className="lead">
-                         Avana Leather nace del sueño de honrar la tradición y convertirla en estilo. 
-                         Somos una marca colombiana que lleva en su esencia más de 40 años de pasión, 
-                         dedicación y maestría heredada de un padre marroquinero.
-                    </p>
-                    <p>
-                        Cada bolso que creamos no es solo un accesorio: es una pieza única, hecha a mano 
-                        con paciencia, amor y respeto por el arte del cuero. Diseñamos para mujeres que 
-                        buscan más que moda: buscan autenticidad, comodidad y una belleza que perdure en el tiempo.
-                    </p>
-                    <p>
-                        En Avana creemos en lo exclusivo y en lo consciente. Producimos en pequeña escala, 
-                        cuidando cada detalle, honrando al medio ambiente y asegurándonos de que cada pieza 
-                        cuente una historia distinta: la tuya.
-                    </p>
-                    <p className="mt-4 fw-bold">
-                        Más de 100 mujeres ya llevan un pedacito de nuestro legado en sus manos, 
-                        y hoy queremos que tú también te atrevas a vivir la experiencia Avana.
-                    </p>
+                    <div className="col-md-6 text-center text-md-start">
+                        <h2 className="section-title">Nuestra Historia: El Arte del Cuero, Un Legado Familiar</h2>
+                        <p className="lead">
+                            Avana Leather nace del sueño de honrar la tradición y convertirla en estilo.
+                            Somos una marca colombiana que lleva en su esencia más de 40 años de pasión,
+                            dedicación y maestría heredada de un padre marroquinero.
+                        </p>
+                        <p>
+                            Cada bolso que creamos no es solo un accesorio: es una pieza única, hecha a mano
+                            con paciencia, amor y respeto por el arte del cuero. Diseñamos para mujeres que
+                            buscan más que moda: buscan autenticidad, comodidad y una belleza que perdure en el tiempo.
+                        </p>
+                        <p>
+                            En Avana creemos en lo exclusivo y en lo consciente. Producimos en pequeña escala,
+                            cuidando cada detalle, honrando al medio ambiente y asegurándonos de que cada pieza
+                            cuente una historia distinta: la tuya.
+                        </p>
+                        <p className="mt-4 fw-bold">
+                            Más de 100 mujeres ya llevan un pedacito de nuestro legado en sus manos,
+                            y hoy queremos que tú también te atrevas a vivir la experiencia Avana.
+                        </p>
+                    </div>
+                    <div className="col-md-6 text-center mt-3 mt-md-0">
+                        <img src="./avana4.png" className="img-fluid story-image" alt="Historia de Avana Leather" />
+                    </div>
                 </div>
-                <div className="col-md-6 text-center mt-3 mt-md-0">
-                    <img src="./avana4.png" className="img-fluid story-image" alt="Historia de Avana Leather" />
-                </div>
-            </div>
             </section>
+
+            {/* Botones Flotantes (NUEVOS: Carrito y WhatsApp) */}
+            <div className="floating-buttons-container">
+                {/* Botón de Carrito Flotante (Encima) */}
+                <button 
+                    className="btn floating-btn cart-btn position-relative" 
+                    onClick={handleShowCart}
+                    title="Ver Carrito de Compras"
+                >
+                    <i className="fa-solid fa-cart-shopping"></i>
+                    {/* Contador de ítems */}
+                    {cart.length > 0 && (
+                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {cart.length}
+                        </span>
+                    )}
+                </button>
+                {/* Botón de WhatsApp Flotante (Debajo) */}
+                <a 
+                    href="https://wa.me/573225109005" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="btn floating-btn whatsapp-btn"
+                    title="Contáctanos por WhatsApp"
+                >
+                    <i className="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+
+            {/* Modal del Carrito (NUEVO) */}
+            <CartModal show={showCart} handleClose={handleCloseCart} />
         </div>
     );
 };

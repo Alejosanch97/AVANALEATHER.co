@@ -262,68 +262,26 @@ export const Home = () => {
                 <h2 className="text-center section-title">Nuestros Productos Destacados</h2>
                 <div id="productCarousel" className="carousel slide" data-bs-ride="carousel" data-bs-wrap="true">
                     <div className="carousel-inner">
-                        {/* Se crea un carousel-item por cada 4 productos */}
-                        <div className="carousel-item active">
-                            <div className="row">
-                                {products.slice(0, 4).map(product => (
-                                    <div key={product.id} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                                        <div className="card product-card h-100">
-                                            <img src={product.image} className="card-img-top product-image" alt={product.name} />
-                                            <div className="card-body d-flex flex-column align-items-center text-center">
-                                                <h3 className="card-title product-name">{product.name}</h3>
-                                                <p className="card-text product-price">$ {product.price.toLocaleString('es-CO')}</p>
-                                                <button
-                                                    className="btn buy-button mt-auto"
-                                                    onClick={() => handleAddToCart(product)}>
-                                                    Comprar
-                                                </button>
-                                            </div>
+                        {products.map((product, index) => (
+                            <div key={product.id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+                                <div className="d-flex justify-content-center">
+                                    <div className="card product-card h-100" style={{ maxWidth: "320px", width: "100%" }}>
+                                        <img src={product.image} className="card-img-top product-image" alt={product.name} />
+                                        <div className="card-body d-flex flex-column align-items-center text-center">
+                                            <h3 className="card-title product-name">{product.name}</h3>
+                                            <p className="card-text product-price">$ {product.price.toLocaleString('es-CO')}</p>
+                                            <button
+                                                className="btn buy-button mt-auto"
+                                                onClick={() => handleAddToCart(product)}>
+                                                Comprar
+                                            </button>
                                         </div>
                                     </div>
-                                ))}
+                                </div>
                             </div>
-                        </div>
-                        <div className="carousel-item">
-                            <div className="row">
-                                {products.slice(4, 8).map(product => (
-                                    <div key={product.id} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                                        <div className="card product-card h-100">
-                                            <img src={product.image} className="card-img-top product-image" alt={product.name} />
-                                            <div className="card-body d-flex flex-column align-items-center text-center">
-                                                <h3 className="card-title product-name">{product.name}</h3>
-                                                <p className="card-text product-price">$ {product.price.toLocaleString('es-CO')}</p>
-                                                <button
-                                                    className="btn buy-button mt-auto"
-                                                    onClick={() => handleAddToCart(product)}>
-                                                    Comprar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="carousel-item">
-                            <div className="row justify-content-center">
-                                {products.slice(8, 10).map(product => (
-                                    <div key={product.id} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                                        <div className="card product-card h-100">
-                                            <img src={product.image} className="card-img-top product-image" alt={product.name} />
-                                            <div className="card-body d-flex flex-column align-items-center text-center">
-                                                <h3 className="card-title product-name">{product.name}</h3>
-                                                <p className="card-text product-price">$ {product.price.toLocaleString('es-CO')}</p>
-                                                <button
-                                                    className="btn buy-button mt-auto"
-                                                    onClick={() => handleAddToCart(product)}>
-                                                    Comprar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+                        ))}
                     </div>
+
                     <button className="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
                         <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span className="visually-hidden">Anterior</span>

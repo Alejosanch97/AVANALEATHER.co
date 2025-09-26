@@ -847,3 +847,16 @@
     font-size: 0.8rem;
   }
 }
+
+.brand-story .col-md-6.text-center.text-md-start {
+    /* Aplica un padding interno de 1.5rem solo en horizontal */
+    padding-left: 5rem !important; 
+    padding-right: 5rem !important; 
+    
+    /* Nota: El !important solo debe usarse si falla la regla A y B */
+}
+
+.brand-story .row > .col-md-6 {
+    padding-left: 0; 
+    padding-right: 0; 
+}

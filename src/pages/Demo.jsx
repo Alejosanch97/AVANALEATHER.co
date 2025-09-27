@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react'; // 👈 Se mantiene useState
 import { Link, useLocation } from 'react-router-dom';
 import useGlobalReducer from '../hooks/useGlobalReducer.jsx';
+import { CartModal } from "../components/CartModal.jsx"; // 👈 IMPORTAR CartModal
 import '../Styles/demo.css';
 
 // Componente individual de la tarjeta de producto (sin cambios)
+// ... (ProductCard permanece igual)
 const ProductCard = ({ product, handleAddToCart }) => {
     // Estado local para la imagen actual
     const [currentImage, setCurrentImage] = useState(product.mainImage);
@@ -77,14 +79,22 @@ const ProductCard = ({ product, handleAddToCart }) => {
         </div>
     );
 };
+// ... (Fin de ProductCard)
+
 
 export const Demo = () => {
     const { store, dispatch } = useGlobalReducer();
-    const { allProducts } = store;
+    const { allProducts, cart } = store; // 👈 OBTENER: 'cart' del store
     const location = useLocation();
+
+    // Lógica del Carrito (Copiada de Home)
+    const [showCart, setShowCart] = useState(false); // 👈 NUEVO: Estado para el modal del carrito
+    const handleShowCart = () => setShowCart(true); // 👈 NUEVO: Handler para abrir
+    const handleCloseCart = () => setShowCart(false); // 👈 NUEVO: Handler para cerrar
 
     const initialCategory = location.state?.category ? [location.state.category] : [];
     
+    // ... (El resto de los estados se mantienen igual)
     const [filteredProducts, setFilteredProducts] = useState(allProducts);
     const [priceRange, setPriceRange] = useState([0, 300000]);
     const [selectedCategories, setSelectedCategories] = useState(initialCategory);
@@ -98,6 +108,7 @@ export const Demo = () => {
     const uniqueCategories = [...new Set(allProducts.map(p => p.category))];
     const uniqueColors = [...new Set(allProducts.flatMap(p => p.colors))];
 
+    // ... (useEffect, runFilters, Handlers se mantienen igual)
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -189,7 +200,6 @@ export const Demo = () => {
     };
     
     // *** FUNCIÓN AUXILIAR PARA RENDERIZAR EL CONTENIDO DE LOS FILTROS ***
-    // Esto evita la duplicación del código HTML del filtro.
     const renderFilterContent = () => (
         <>
             <div className="filter-group mb-4 pb-3 border-bottom">
@@ -354,6 +364,38 @@ export const Demo = () => {
                     </div>
                 </div>
             )}
+            
+            {/* 5. Botones Flotantes (COPIADOS DE HOME) */}
+            <div className="floating-buttons-container">
+                {/* Botón de Carrito Flotante (Encima) */}
+                <button 
+                    className="btn floating-btn cart-btn position-relative" 
+                    onClick={handleShowCart}
+                    title="Ver Carrito de Compras"
+                >
+                    <i className="fa-solid fa-cart-shopping"></i>
+                    {/* Contador de ítems */}
+                    {cart.length > 0 && (
+                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {cart.length}
+                        </span>
+                    )}
+                </button>
+                {/* Botón de WhatsApp Flotante (Debajo) */}
+                <a 
+                    href="https://wa.me/573225109005" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="btn floating-btn whatsapp-btn"
+                    title="Contáctanos por WhatsApp"
+                >
+                    <i className="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+
+            {/* 6. Modal del Carrito (COPIADO DE HOME) */}
+            <CartModal show={showCart} handleClose={handleCloseCart} />
+
         </div>
     );
 };

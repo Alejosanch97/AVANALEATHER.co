@@ -78,6 +78,9 @@ export const Home = () => {
         <div className="home-container">
             {/* Agregamos el ToastContainer al final del componente */}
             <ToastContainer />
+            <div className="top-banner-envios" style={{ backgroundColor: '#79635aff' }}>
+                <p className="banner-text-envios">Envíos flash: Entregas en 2 a 3 días hábiles</p>
+            </div>
             {/* Sección del Carrusel (Carousel de Bootstrap) */}
             <section className="carousel-section">
                 <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
@@ -185,7 +188,7 @@ export const Home = () => {
 
             {/* Nueva Sección: Texto "Hecho en Pasto, Colombia" */}
             <section className="info-section text-center bg-light-gray section-wrapper">
-                <h2 className="section-title">Hecho en Pasto, <span className="text-colombia">Colombia</span></h2>
+                <h2 className="section-title">Hecho en <span className="text-colombia">Colombia</span></h2>
                 <p className="info-text">Descubre la artesanía y calidad de nuestros productos, con un legado 100% colombiano.</p>
             </section>
 
@@ -217,39 +220,49 @@ export const Home = () => {
                 <div className="container">
                     <h2 className="text-center section-title mb-5">Detalles que Marcan la Diferencia</h2>
                     <div className="row justify-content-center align-items-center">
+
                         {/* Columna Izquierda */}
                         <div className="col-md-4">
                             <div className="quality-item mb-4">
-                                <h3 className="section-title-small">1. Material exterior cuero 100% natural</h3>
+                                <h3 className="section-title-small">1. Cuerpo en cuero 100% natural</h3>
                                 <p>
-                                    Seleccionamos el mejor cuero 100% natural, curado con procesos responsables que no solo garantizan una textura suave y duradera, sino que también respetan el medio ambiente. Cada pieza comienza con un material que es pura esencia.
+                                    Elaborado con cuero 100% natural de alta calidad, tratado cuidadosamente para ofrecer
+                                    una textura suave, durabilidad excepcional y un acabado elegante. Este es el corazón del bolso,
+                                    donde se combinan diseño y funcionalidad en cada detalle.
                                 </p>
                             </div>
+
                             <div className="quality-item">
-                                <h3 className="section-title-small">2. Asa en cuero natural</h3>
+                                <h3 className="section-title-small">2. Asas resistentes en cuero</h3>
                                 <p>
-                                    El asa corta aporta un toque de sofisticación y estructura. Elaborada con cuero 100% colombiano, cuidadosamente trabajado para brindar resistencia, suavidad y una excelente presentación.
+                                    Las asas están confeccionadas en cuero genuino, brindando una sujeción cómoda y firme.
+                                    Su diseño permite llevar el bolso al hombro o en la mano con total elegancia y seguridad,
+                                    manteniendo la forma estructurada del accesorio.
                                 </p>
                             </div>
                         </div>
 
                         {/* Columna Central para la Imagen */}
                         <div className="col-md-4 text-center">
-                            <img src="./avana3.png" className="img-fluid central-image" alt="Detalles de calidad del producto" />
+                            <img src="./avanaa3.png" className="img-fluid central-image" alt="Detalles de calidad del producto" />
                         </div>
 
                         {/* Columna Derecha */}
                         <div className="col-md-4">
                             <div className="quality-item mb-4">
-                                <h3 className="section-title-small">3. Asa larga en reata de algodón o en cuero</h3>
+                                <h3 className="section-title-small">3. Correa lateral ajustable y desmontable</h3>
                                 <p>
-                                    Nuestros bolsos incluyen asa larga en reata o en cuero, según las características de cada diseño y la funcionalidad del producto. Esto te da versatilidad para llevarlo de diferentes maneras.
+                                    Incluye una correa lateral en cuero que puedes ajustar o retirar según tu estilo.
+                                    Este detalle ofrece versatilidad total para llevar el bolso cruzado o al hombro,
+                                    adaptándose perfectamente a cada ocasión.
                                 </p>
                             </div>
+
                             <div className="quality-item">
-                                <h3 className="section-title-small">4. Costuras reforzadas</h3>
+                                <h3 className="section-title-small">4. Monedero / bolsillo complementario</h3>
                                 <p>
-                                    La belleza reside en los detalles. Por eso, nuestras costuras son la espina dorsal de cada diseño. Utilizamos hilo encerado de alta resistencia, aplicado con precisión artesanal para asegurar que cada bolso sea robusto y duradero.
+                                    Cada bolso incorpora un práctico monedero externo que añade funcionalidad sin sacrificar
+                                    el estilo. Perfecto para llevar llaves, tarjetas o pequeños objetos esenciales siempre a la mano.
                                 </p>
                             </div>
                         </div>

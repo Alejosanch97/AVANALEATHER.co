@@ -860,3 +860,75 @@
     padding-left: 0; 
     padding-right: 0; 
 }
+
+.top-banner-envios {
+    /* El color de fondo es el que mencionaste en el primer mensaje */
+    background-color: #f74b02; /* Color terracota/greige */
+    color: rgb(248, 246, 246); /* Color de texto blanco para contraste */
+    text-align: center;
+    padding: 10px 0; /* Espacio arriba y abajo */
+    width: 100%;
+    /* Opcional: Si quieres que el banner tenga el ancho completo de la ventana */
+    /* margin-left: calc(-50vw + 50%); */
+}
+
+.banner-text-envios {
+    margin: 0; /* Elimina el margen por defecto del párrafo */
+    font-size: 1rem; /* Ajusta el tamaño del texto si es necesario */
+    font-weight: 500; /* Peso de la fuente semi-bold */
+}
+
+/* 🛠️ Ajuste especial para portátiles con poca altura (ej: 1366x768) */
+@media screen and (min-width: 768px) and (max-height: 800px) {
+  .featured-products .product-card {
+    max-height: 80vh; /* un poco menos para dejar espacio entre secciones */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    margin-bottom: 2.5rem; /* 💡 más separación inferior con la siguiente sección */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-radius: 16px;
+    background: #fff;
+    transition: transform 0.3s ease;
+  }
+
+  .featured-products .product-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .featured-products .product-image {
+    height: 200px; /* aún más compacta */
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .featured-products .product-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0.4rem 0;
+  }
+
+  .featured-products .product-price {
+    font-size: 1.05rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .featured-products .buy-button {
+    margin-top: auto;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    background-color: #8B4513; /* tono más elegante y visible */
+    color: #fff;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+  }
+
+  .featured-products .buy-button:hover {
+    background-color: #a0522d;
+    transform: scale(1.05);
+  }
+}

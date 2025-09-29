@@ -351,7 +351,7 @@ export const Home = () => {
                         </p>
                     </div>
                     <div className="col-md-6 text-center mt-3 mt-md-0">
-                        <img src="./avana4.png" className="img-fluid story-image" alt="Historia de Avana Leather" />
+                        <img src="./avanaa4.png" className="img-fluid story-image" alt="Historia de Avana Leather" />
                     </div>
                 </div>
             </section>

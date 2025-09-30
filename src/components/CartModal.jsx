@@ -8,15 +8,20 @@ export const CartModal = ({ show, handleClose }) => {
     const { cart, allProducts } = store;
     const navigate = useNavigate();
 
-    const handleRemoveFromCart = (itemId) => {
+    // 1. Usar item.cartId (el ID único de la instancia en el carrito)
+    const handleRemoveFromCart = (itemCartId) => {
         dispatch({
             type: "REMOVE_FROM_CART",
-            payload: itemId
+            // El payload es el cartId, usado por el reducer para filtrar el ítem correcto.
+            payload: itemCartId 
         });
     };
 
+    // La lógica de búsqueda del producto base (allProducts) se mantiene,
+    // pero el payload de dispatch debe enviar el itemCartId.
     const handleChangeColor = (item, newColor) => {
-        const product = allProducts.find(p => p.id === item.id);
+        // Usamos item.id para encontrar la información del producto base (imágenes, colores)
+        const product = allProducts.find(p => p.id === item.id); 
         
         if (product) {
             const formattedColor = newColor.toLowerCase().replace(/\s/g, '');
@@ -26,7 +31,8 @@ export const CartModal = ({ show, handleClose }) => {
                 dispatch({
                     type: "UPDATE_CART_ITEM_COLOR",
                     payload: {
-                        itemId: item.id,
+                        // 2. Usamos el cartId para que el reducer sepa qué instancia actualizar
+                        itemCartId: item.cartId, 
                         newColor: newColor,
                         newImage: newImage
                     }
@@ -75,8 +81,9 @@ export const CartModal = ({ show, handleClose }) => {
                             <p className="text-center text-muted">Tu carrito está vacío.</p>
                         ) : (
                             <div>
+                                {/* 3. Usamos item.cartId como la KEY única de React */}
                                 {cart.map((item) => (
-                                    <div key={item.id} className="d-flex align-items-center mb-3 border-bottom pb-2">
+                                    <div key={item.cartId} className="d-flex align-items-center mb-3 border-bottom pb-2">
                                         <img src={item.image} alt={item.name} style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '5px' }} />
                                         <div className="ms-3 flex-grow-1">
                                             <h6 className="mb-0">{item.name}</h6>
@@ -91,7 +98,8 @@ export const CartModal = ({ show, handleClose }) => {
                                                                 key={color}
                                                                 className={`color-dot color-${color.toLowerCase().replace(/\s/g, '')}`}
                                                                 style={{ border: item.selectedColor === color ? '2px solid #8b4513' : '1px solid #ccc', cursor: 'pointer' }}
-                                                                onClick={() => handleChangeColor(item, color)}
+                                                                // Pasamos el ítem completo, que incluye el cartId
+                                                                onClick={() => handleChangeColor(item, color)} 
                                                             ></span>
                                                         ))}
                                                     </div>
@@ -100,7 +108,8 @@ export const CartModal = ({ show, handleClose }) => {
                                         </div>
                                         <button 
                                             className="btn btn-sm btn-outline-danger"
-                                            onClick={() => handleRemoveFromCart(item.id)}
+                                            // 4. Pasamos el item.cartId a la función de eliminación
+                                            onClick={() => handleRemoveFromCart(item.cartId)} 
                                         >
                                             Eliminar
                                         </button>

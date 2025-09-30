@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 const allProducts = [
         // Bolsos
         {
@@ -355,35 +357,41 @@ export const initialStore = () => {
 
 export default function storeReducer(store, action = {}) {
     switch (action.type) {
+        
         case "ADD_TO_CART":
-            // Lógica para añadir un producto al carrito.
-            // El action.payload ya contiene la imagen y el color correctos desde Demo.jsx.
+            // 1. GENERAR ID ÚNICO: Asignar un cartId a cada nuevo ítem del carrito.
+            const newCartItem = {
+                ...action.payload, // El producto base (con id, name, price, etc.)
+                cartId: uuidv4(),  // Propiedad ÚNICA para esta instancia
+            };
+
             return {
                 ...store,
-                cart: [...store.cart, action.payload],
+                cart: [...store.cart, newCartItem],
             };
         
         case "REMOVE_FROM_CART":
-            // Lógica para eliminar un producto del carrito.
+            // 2. USAR cartId PARA ELIMINAR: action.payload ahora es el cartId del ítem a remover.
             return {
                 ...store,
-                cart: store.cart.filter(item => item.id !== action.payload),
+                // Filtramos el carrito manteniendo solo los ítems cuyo cartId NO coincida con el payload.
+                cart: store.cart.filter(item => item.cartId !== action.payload),
             };
         
         case "UPDATE_CART_ITEM_COLOR":
-            // Lógica para cambiar el color de un producto en el carrito.
-            // Se actualiza la imagen y el color seleccionado.
+            // 3. USAR cartId PARA ACTUALIZAR: action.payload.itemCartId es el ID único del ítem a modificar.
             return {
                 ...store,
                 cart: store.cart.map(item => {
-                    if (item.id === action.payload.itemId) {
+                    // Usamos item.cartId para encontrar la instancia exacta
+                    if (item.cartId === action.payload.itemCartId) { 
                         return {
                             ...item,
                             selectedColor: action.payload.newColor,
                             image: action.payload.newImage
                         };
                     }
-                    return item;
+                    return item; // Devolvemos los demás ítems sin cambios
                 }),
             };
         

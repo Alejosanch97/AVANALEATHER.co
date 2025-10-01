@@ -12,31 +12,48 @@ export const CartModal = ({ show, handleClose }) => {
     const handleRemoveFromCart = (itemCartId) => {
         dispatch({
             type: "REMOVE_FROM_CART",
-            // El payload es el cartId, usado por el reducer para filtrar el ítem correcto.
             payload: itemCartId 
         });
     };
 
-    // La lógica de búsqueda del producto base (allProducts) se mantiene,
-    // pero el payload de dispatch debe enviar el itemCartId.
+    // ✅ CORRECCIÓN CLAVE AQUÍ: Simplificamos la búsqueda de la imagen.
+    // Asumimos que el 'item' ya tiene el objeto 'images' completo.
     const handleChangeColor = (item, newColor) => {
-        // Usamos item.id para encontrar la información del producto base (imágenes, colores)
-        const product = allProducts.find(p => p.id === item.id); 
         
-        if (product) {
-            const formattedColor = newColor.toLowerCase().replace(/\s/g, '');
-            const newImage = product.images[formattedColor];
+        // Formatea el color exactamente como están las claves en tu objeto 'images' (minúsculas, sin espacios).
+        // Si tienes 'Blanco' en el array de colors, busca 'blanco' en el objeto images.
+        const formattedColorKey = newColor.toLowerCase().replace(/\s/g, ''); 
 
-            if (newImage) {
-                dispatch({
-                    type: "UPDATE_CART_ITEM_COLOR",
-                    payload: {
-                        // 2. Usamos el cartId para que el reducer sepa qué instancia actualizar
-                        itemCartId: item.cartId, 
-                        newColor: newColor,
-                        newImage: newImage
-                    }
-                });
+        // Usamos el objeto images directamente del item del carrito
+        const newImage = item.images?.[formattedColorKey];
+
+        if (newImage) {
+            dispatch({
+                type: "UPDATE_CART_ITEM_COLOR",
+                payload: {
+                    itemCartId: item.cartId, // ID único de la instancia
+                    newColor: newColor,
+                    newImage: newImage // ✅ URL correcta encontrada
+                }
+            });
+        } else {
+            // Manejo de error si la imagen no se encuentra (opcional, pero útil para depurar)
+            console.error(`Error: No se encontró la imagen para el color '${newColor}' (clave: '${formattedColorKey}') en el item con cartId: ${item.cartId}`);
+            
+            // Si no se encuentra, busca el producto base en allProducts como fallback (MÁS LENTO)
+            const product = allProducts.find(p => p.id === item.id);
+            if (product) {
+                 const fallbackImage = product.images?.[formattedColorKey];
+                 if (fallbackImage) {
+                      dispatch({
+                        type: "UPDATE_CART_ITEM_COLOR",
+                        payload: {
+                            itemCartId: item.cartId, 
+                            newColor: newColor,
+                            newImage: fallbackImage 
+                        }
+                    });
+                 }
             }
         }
     };
@@ -84,6 +101,7 @@ export const CartModal = ({ show, handleClose }) => {
                                 {/* 3. Usamos item.cartId como la KEY única de React */}
                                 {cart.map((item) => (
                                     <div key={item.cartId} className="d-flex align-items-center mb-3 border-bottom pb-2">
+                                        {/* Usamos item.image que contiene la URL actual (que cambia con el color) */}
                                         <img src={item.image} alt={item.name} style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '5px' }} />
                                         <div className="ms-3 flex-grow-1">
                                             <h6 className="mb-0">{item.name}</h6>
@@ -96,9 +114,12 @@ export const CartModal = ({ show, handleClose }) => {
                                                         {item.colors.map(color => (
                                                             <span
                                                                 key={color}
+                                                                // Asegúrate de que los estilos CSS para color-dot y color-X estén definidos
                                                                 className={`color-dot color-${color.toLowerCase().replace(/\s/g, '')}`}
-                                                                style={{ border: item.selectedColor === color ? '2px solid #8b4513' : '1px solid #ccc', cursor: 'pointer' }}
-                                                                // Pasamos el ítem completo, que incluye el cartId
+                                                                style={{ 
+                                                                    border: item.selectedColor === color ? '2px solid #8b4513' : '1px solid #ccc', 
+                                                                    cursor: 'pointer' 
+                                                                }}
                                                                 onClick={() => handleChangeColor(item, color)} 
                                                             ></span>
                                                         ))}
@@ -108,7 +129,6 @@ export const CartModal = ({ show, handleClose }) => {
                                         </div>
                                         <button 
                                             className="btn btn-sm btn-outline-danger"
-                                            // 4. Pasamos el item.cartId a la función de eliminación
                                             onClick={() => handleRemoveFromCart(item.cartId)} 
                                         >
                                             Eliminar

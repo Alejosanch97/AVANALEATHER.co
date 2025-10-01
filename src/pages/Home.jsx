@@ -79,7 +79,7 @@ export const Home = () => {
             {/* Agregamos el ToastContainer al final del componente */}
             <ToastContainer />
             <div className="top-banner-envios" style={{ backgroundColor: '#79635aff' }}>
-                <p className="banner-text-envios">Envíos flash: Entregas en 2 a 3 días hábiles</p>
+                <p className="banner-text-envios">Envíos flash: Entregas en 2 a 5 días hábiles</p>
             </div>
             {/* Sección del Carrusel (Carousel de Bootstrap) */}
             <section className="carousel-section">

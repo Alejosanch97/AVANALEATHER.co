@@ -1,32 +1,32 @@
-import React, { useState, useEffect, useCallback } from 'react'; // 👈 Se mantiene useState
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import useGlobalReducer from '../hooks/useGlobalReducer.jsx';
-import { CartModal } from "../components/CartModal.jsx"; // 👈 IMPORTAR CartModal
+import { CartModal } from "../components/CartModal.jsx";
 import '../Styles/demo.css';
 
+// 🚨🚨🚨 1. DEFINIR LA URL DE LA API AQUI 🚨🚨🚨
+const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxjL9eUMl0WhA_pgnemVgeQjQpUpJUXvuLhyBmX6xE7KCNKgVVndMhO1frcXchcdoD_6g/exec";
+
 // Componente individual de la tarjeta de producto (sin cambios)
-// ... (ProductCard permanece igual)
 const ProductCard = ({ product, handleAddToCart }) => {
-    // Estado local para la imagen actual
+    // ... (ProductCard se mantiene igual)
     const [currentImage, setCurrentImage] = useState(product.mainImage);
     const [currentColor, setCurrentColor] = useState(product.colors[0]);
 
-    // Función para cambiar la imagen al hacer hover en la IMAGEN
     const handleImageHover = () => {
         if (product.hoverImage) {
             setCurrentImage(product.hoverImage);
         }
     };
 
-    // Función para restablecer la imagen al salir de la IMAGEN
     const handleImageLeave = () => {
         setCurrentImage(product.mainImage);
     };
 
-    // Función para cambiar la imagen y el color al pasar el mouse por el punto de color
     const handleColorHover = (color) => {
         const formattedColor = color.toLowerCase().replace(/\s/g, '');
-        const imageToDisplay = product.images[formattedColor];
+        // Asegúrate de que 'images' exista antes de acceder
+        const imageToDisplay = product.images?.[formattedColor];
         if (imageToDisplay) {
             setCurrentImage(imageToDisplay);
             setCurrentColor(color);
@@ -36,7 +36,6 @@ const ProductCard = ({ product, handleAddToCart }) => {
         }
     };
     
-    // Función para añadir al carrito que llama a la función principal de Demo
     const handleAddClick = () => {
         handleAddToCart(product, currentColor);
     };
@@ -46,6 +45,7 @@ const ProductCard = ({ product, handleAddToCart }) => {
             <div 
                 className="product-card h-100 position-relative"
             >
+                {/* Usar currentImage, que es dinámica */}
                 <img 
                     src={currentImage} 
                     className="card-img-top product-image" 
@@ -57,6 +57,7 @@ const ProductCard = ({ product, handleAddToCart }) => {
                     <h5 className="product-card-title">{product.name}</h5>
                     <p className="product-reference text-muted">{product.reference}</p>
                     <div className="product-colors mb-2">
+                        {/* Iterar sobre product.colors, que viene de la API */}
                         {product.colors.map(color => (
                             <span 
                                 key={color} 
@@ -67,7 +68,8 @@ const ProductCard = ({ product, handleAddToCart }) => {
                             ></span>
                         ))}
                     </div>
-                    <p className="product-price">$ {product.price.toLocaleString('es-CO')}</p>
+                    {/* toLocaleString para formato de moneda */}
+                    <p className="product-price">$ {product.price.toLocaleString('es-CO')}</p> 
                     <button 
                         className="btn btn-buy-product mt-auto"
                         onClick={handleAddClick}
@@ -79,43 +81,72 @@ const ProductCard = ({ product, handleAddToCart }) => {
         </div>
     );
 };
-// ... (Fin de ProductCard)
 
 
 export const Demo = () => {
     const { store, dispatch } = useGlobalReducer();
-    const { allProducts, cart } = store; // 👈 OBTENER: 'cart' del store
-    const location = useLocation();
+    const { cart } = store;
 
-    // Lógica del Carrito (Copiada de Home)
-    const [showCart, setShowCart] = useState(false); // 👈 NUEVO: Estado para el modal del carrito
-    const handleShowCart = () => setShowCart(true); // 👈 NUEVO: Handler para abrir
-    const handleCloseCart = () => setShowCart(false); // 👈 NUEVO: Handler para cerrar
+    // 🚨🚨🚨 ESTADOS 🚨🚨🚨
+    const [products, setProducts] = useState([]); 
+    const [loading, setLoading] = useState(true); 
+    
+    const location = useLocation();
+    const [showCart, setShowCart] = useState(false);
+    const handleShowCart = () => setShowCart(true);
+    const handleCloseCart = () => setShowCart(false);
 
     const initialCategory = location.state?.category ? [location.state.category] : [];
-    
-    // ... (El resto de los estados se mantienen igual)
-    const [filteredProducts, setFilteredProducts] = useState(allProducts);
+    const [filteredProducts, setFilteredProducts] = useState([]); 
     const [priceRange, setPriceRange] = useState([0, 300000]);
     const [selectedCategories, setSelectedCategories] = useState(initialCategory);
     const [selectedColors, setSelectedColors] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [sortBy, setSortBy] = useState('default');
-    
-    // NUEVO ESTADO para controlar si los filtros están visibles en móvil (Offcanvas)
     const [showMobileFilters, setShowMobileFilters] = useState(false); 
 
-    const uniqueCategories = [...new Set(allProducts.map(p => p.category))];
-    const uniqueColors = [...new Set(allProducts.flatMap(p => p.colors))];
+    // ✅ CÁLCULO DINÁMICO: Aseguramos que se actualicen al cargar 'products'.
+    const uniqueCategories = [...new Set(products.map(p => p.category))].filter(Boolean);
+    const uniqueColors = [...new Set(products.flatMap(p => p.colors || []))].filter(Boolean);
 
-    // ... (useEffect, runFilters, Handlers se mantienen igual)
+    // =============================================================
+    // 🚨 2. EFECTO PARA CARGAR LOS PRODUCTOS DE LA API (CLAVE)
+    // =============================================================
     useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
+        const fetchProducts = async () => {
+            setLoading(true);
+            try {
+                const response = await fetch(SHEET_API_URL);
+                if (!response.ok) {
+                    throw new Error(`Error HTTP! Estado: ${response.status}`);
+                }
+                const data = await response.json();
+                
+                if (!Array.isArray(data)) {
+                    console.error("La API no devolvió una lista de productos:", data);
+                    setProducts([]); 
+                    setFilteredProducts([]);
+                    return;
+                }
 
-    // Función de filtrado: se envuelve en useCallback para evitar re-renderizados innecesarios, aunque no es estrictamente necesario en este contexto.
+                setProducts(data); 
+                setFilteredProducts(data); // Inicializar productos filtrados
+            } catch (error) {
+                console.error("Error al cargar los productos:", error);
+                setProducts([]); 
+                setFilteredProducts([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProducts();
+        window.scrollTo(0, 0); 
+    }, []); 
+
+    // Función de filtrado
     const runFilters = useCallback(() => {
-        let tempProducts = [...allProducts];
+        let tempProducts = [...products]; 
 
         // 1. Filtrar por búsqueda
         if (searchTerm) {
@@ -148,13 +179,13 @@ export const Demo = () => {
         }
 
         setFilteredProducts(tempProducts);
-    }, [selectedCategories, selectedColors, priceRange, searchTerm, sortBy, allProducts]);
+    }, [selectedCategories, selectedColors, priceRange, searchTerm, sortBy, products]); 
 
     useEffect(() => {
         runFilters();
     }, [runFilters, location.state]);
 
-    // HANDLERS (Sin cambios, pero se mantienen para completar el código)
+    // ✅ HANDLERS COMPLETOS: Lógica necesaria para marcar/desmarcar checkboxes
     const handleCategoryChange = (e) => {
         const { value, checked } = e.target;
         setSelectedCategories(prev =>
@@ -168,15 +199,10 @@ export const Demo = () => {
             checked ? [...prev, value] : prev.filter(color => color !== value)
         );
     };
-
+    
     const handlePriceRangeChange = (e) => {
-        const { name, value } = e.target;
-        setPriceRange(prev => {
-            const newRange = [...prev];
-            if (name === "minPrice") newRange[0] = parseInt(value);
-            if (name === "maxPrice") newRange[1] = parseInt(value);
-            return newRange;
-        });
+        const { value } = e.target;
+        setPriceRange(prev => [parseInt(value), prev[1]]);
     };
     
     // Función para añadir al carrito (Sin cambios)
@@ -187,7 +213,8 @@ export const Demo = () => {
             name: product.name,
             reference: product.reference,
             price: product.price,
-            image: product.images[formattedColor] || product.mainImage,
+            // Usamos product.images, que viene de la API
+            image: product.images[formattedColor] || product.mainImage, 
             selectedColor: color,
             colors: product.colors,
             images: product.images,
@@ -227,6 +254,7 @@ export const Demo = () => {
             <div className="filter-group mb-4 pb-3 border-bottom">
                 <h5 className="filter-heading">Categoría</h5>
                 <div className="category-list">
+                    {/* ✅ Mapeo de categorías con la lista única */}
                     {uniqueCategories.map(category => (
                         <div key={category} className="form-check">
                             <input
@@ -234,7 +262,8 @@ export const Demo = () => {
                                 type="checkbox"
                                 value={category}
                                 id={`cat-${category}`}
-                                checked={selectedCategories.includes(category)}
+                                // ✅ Usar selectedCategories para ver si debe estar marcado
+                                checked={selectedCategories.includes(category)} 
                                 onChange={handleCategoryChange}
                             />
                             <label className="form-check-label" htmlFor={`cat-${category}`}>
@@ -248,6 +277,7 @@ export const Demo = () => {
             <div className="filter-group mb-4 pb-3 border-bottom">
                 <h5 className="filter-heading">Color</h5>
                 <div className="color-filter-grid">
+                    {/* ✅ Mapeo de colores con la lista única */}
                     {uniqueColors.map(color => (
                         <div key={color} className="form-check form-check-inline">
                             <input
@@ -255,6 +285,7 @@ export const Demo = () => {
                                 type="checkbox"
                                 value={color}
                                 id={`color-${color}`}
+                                // ✅ Usar selectedColors para ver si debe estar marcado
                                 checked={selectedColors.includes(color)}
                                 onChange={handleColorChange}
                             />
@@ -268,7 +299,32 @@ export const Demo = () => {
         </>
     );
 
-    // *** INICIO DEL RENDER PRINCIPAL ***
+    // =============================================================
+    // 🚨 3. MANEJAR ESTADO DE CARGA (LOADING)
+    // =============================================================
+    if (loading) {
+        return (
+            <div className="demo-page container-fluid py-5 text-center">
+                <h4 className="mb-3">Cargando productos...</h4>
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+        );
+    }
+    
+    // Si ya cargó y no hay productos
+    if (!loading && products.length === 0) {
+        return (
+            <div className="demo-page container-fluid py-5 text-center">
+                <h4>⚠️ No se encontraron productos. Revisa tu Google Sheet y el Apps Script.</h4>
+                <p>Asegúrate de que la hoja tenga datos y el script esté publicado como "Cualquier persona".</p>
+            </div>
+        );
+    }
+
+
+    // *** INICIO DEL RENDER PRINCIPAL (Si ya cargó y hay productos) ***
     return (
         <div className="demo-page container-fluid py-5">
             <nav aria-label="breadcrumb" className="mb-4">
@@ -280,7 +336,7 @@ export const Demo = () => {
 
             <div className="row">
                 
-                {/* 1. Botón de Filtro para Móviles (Visible sólo en pantallas pequeñas < 992px) */}
+                {/* 1. Botón de Filtro para Móviles */}
                 <div className="col-12 d-lg-none mb-4">
                     <button 
                         className="btn btn-primary w-100 mobile-filter-btn"
@@ -290,7 +346,7 @@ export const Demo = () => {
                     </button>
                 </div>
 
-                {/* 2. Columna de Filtros de Escritorio (Oculta en móviles) */}
+                {/* 2. Columna de Filtros de Escritorio */}
                 <aside className="col-lg-3 d-none d-lg-block filters-column">
                     <h4 className="filters-title mb-4">Filtrar Por</h4>
                     {renderFilterContent()}
@@ -343,7 +399,7 @@ export const Demo = () => {
                 </main>
             </div>
             
-            {/* 4. Overlay/Offcanvas para Filtros Móviles */}
+            {/* 4. Overlay/Offcanvas para Filtros Móviles (renderFilterContent) */}
             {showMobileFilters && (
                 <div className="mobile-filters-overlay d-lg-none">
                     <div className="filters-content-modal">
@@ -352,7 +408,6 @@ export const Demo = () => {
                             <button className="btn-close" onClick={() => setShowMobileFilters(false)}></button>
                         </div>
                         
-                        {/* Contenido de los filtros renderizado por la función */}
                         {renderFilterContent()}
                         
                         <button 
@@ -365,23 +420,20 @@ export const Demo = () => {
                 </div>
             )}
             
-            {/* 5. Botones Flotantes (COPIADOS DE HOME) */}
+            {/* 5. Botones Flotantes */}
             <div className="floating-buttons-container">
-                {/* Botón de Carrito Flotante (Encima) */}
                 <button 
                     className="btn floating-btn cart-btn position-relative" 
                     onClick={handleShowCart}
                     title="Ver Carrito de Compras"
                 >
                     <i className="fa-solid fa-cart-shopping"></i>
-                    {/* Contador de ítems */}
                     {cart.length > 0 && (
                         <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                             {cart.length}
                         </span>
                     )}
                 </button>
-                {/* Botón de WhatsApp Flotante (Debajo) */}
                 <a 
                     href="https://wa.me/573225109005" 
                     target="_blank" 
@@ -393,7 +445,7 @@ export const Demo = () => {
                 </a>
             </div>
 
-            {/* 6. Modal del Carrito (COPIADO DE HOME) */}
+            {/* 6. Modal del Carrito */}
             <CartModal show={showCart} handleClose={handleCloseCart} />
 
         </div>
